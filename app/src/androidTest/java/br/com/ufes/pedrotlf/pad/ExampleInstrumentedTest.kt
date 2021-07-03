@@ -1,4 +1,4 @@
-package br.com.ufes.pedrotlf.labcin
+package br.com.ufes.pedrotlf.pad
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

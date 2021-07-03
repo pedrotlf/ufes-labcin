@@ -1,4 +1,4 @@
-package br.com.ufes.pedrotlf.labcin
+package br.com.ufes.pedrotlf.pad
 
 import org.junit.Test
 
