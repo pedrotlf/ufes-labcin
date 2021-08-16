@@ -1,3 +1,42 @@
 <resources>
     <string name="app_name">PAD Ufes</string>
+    <string name="app_name_full">Programa de Assistência Dermatológica</string>
+
+    <string name="home_body_title">Escolha uma função</string>
+
+    <string name="surgery_home_body_button">Adicionar lesão</string>
+
+    <string name="dermatology_home_patient_add_button">Novo paciente</string>
+    <string name="dermatology_home_patient_list_button">Lista de pacientes</string>
+    <string name="dermatology_home_patient_send_button">Enviar pacientes cadastrados</string>
+
+    <string name="dermatology_new_patient_header">Novo Paciente</string>
+    <string name="dermatology_new_patient_data_sus_number">Nº do cartão do SUS</string>
+    <string name="dermatology_new_patient_data_age">Idade do paciente</string>
+    <string name="dermatology_new_patient_data_service_city">Cidade de atendimento</string>
+    <string name="dermatology_new_patient_data_living_city">Cidade em que o paciente mora</string>
+    <string name="dermatology_new_patient_data_next">Próximo</string>
+
+    <string name="dermatology_new_patient_lesion_body_region">Região da lesão</string>
+    <string name="dermatology_new_patient_lesion_diagnostic">Diagnóstico</string>
+    <string name="dermatology_new_patient_lesion_diagnostic_secondary">Diagnóstico secundário</string>
+    <string name="dermatology_new_patient_lesion_related_title">Em relação à lesão:</string>
+    <string name="dermatology_new_patient_lesion_grown">Cresceu?</string>
+    <string name="dermatology_new_patient_lesion_itched">Coçou?</string>
+    <string name="dermatology_new_patient_lesion_bleed">Sangrou?</string>
+    <string name="dermatology_new_patient_lesion_hurt">Doeu?</string>
+    <string name="dermatology_new_patient_lesion_pattern_changed">Mudou o padrão?</string>
+    <string name="dermatology_new_patient_lesion_relief">Lesão em relevo?</string>
+    <string name="dermatology_new_patient_lesion_next">Próximo</string>
+
+    <string name="dermatology_new_patient_lesion_photos_camera">Câmera</string>
+    <string name="dermatology_new_patient_lesion_photos_album">Álbum</string>
+    <string name="dermatology_new_patient_lesion_photos_confirm">Vincular lesão ao paciente</string>
+
+    <string name="footer_change_function_button">Escolher outra função</string>
+
+    <string name="word_cirurgia">Cirurgia</string>
+    <string name="word_dermatologia">Dermatologia</string>
+    <string name="word_sim">Sim</string>
+    <string name="word_nao">Não</string>
 </resources>
