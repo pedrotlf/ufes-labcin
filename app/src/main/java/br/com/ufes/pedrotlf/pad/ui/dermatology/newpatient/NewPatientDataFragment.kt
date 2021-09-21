@@ -1,4 +1,4 @@
-package br.com.ufes.pedrotlf.pad.dermatology.newpatient
+package br.com.ufes.pedrotlf.pad.ui.dermatology.newpatient
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import br.com.ufes.pedrotlf.pad.BaseFragment
 import br.com.ufes.pedrotlf.pad.databinding.FragmentDermatologyNewPatientDataBinding

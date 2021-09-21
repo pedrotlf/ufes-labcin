@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".surgery.SurgeryHomeFragment">
+    tools:context=".ui.surgery.SurgeryHomeFragment">
 
     <LinearLayout
         android:id="@+id/fragment_surgery_home_header"

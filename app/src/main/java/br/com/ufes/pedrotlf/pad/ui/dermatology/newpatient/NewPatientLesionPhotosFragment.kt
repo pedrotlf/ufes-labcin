@@ -1,4 +1,4 @@
-package br.com.ufes.pedrotlf.pad.dermatology.newpatient
+package br.com.ufes.pedrotlf.pad.ui.dermatology.newpatient
 
 import android.app.Activity
 import android.content.Intent
@@ -51,7 +51,6 @@ class NewPatientLesionPhotosFragment : BaseFragment() {
 
             fragmentDermatologyNewPatientLesionPhotosFooterConfirmButton.setOnClickListener {
                 newPatientViewModel.savePatientData()
-                newPatientViewModel.clearAllData()
                 val action = NewPatientLesionPhotosFragmentDirections.actionBackToDermatologyHomeFragment()
                 findNavController().navigate(action)
             }

@@ -1,4 +1,4 @@
-package br.com.ufes.pedrotlf.pad.dermatology.newpatient
+package br.com.ufes.pedrotlf.pad.ui.dermatology.newpatient
 
 import androidx.lifecycle.*
 import br.com.ufes.pedrotlf.pad.data.PatientsDAO
@@ -42,14 +42,14 @@ class NewPatientViewModel @Inject constructor(
     }
 
     fun savePatientData() = viewModelScope.launch {
-        val patientData = PatientDataDTO(
+        val patientDataId = patientsDAO.insert(PatientDataDTO(
             susNumber.value ?: "",
             age.value ?: -1,
             serviceCity.value ?: "",
             livingCity.value ?: ""
-        ).also { patientsDAO.insert(it) }
+        ))
 
-        val onlyLesionForNow = LesionDataDTO(
+        val lesionId = patientsDAO.insert(LesionDataDTO(
             bodyRegion.value ?: "",
             diagnostic.value ?: "",
             diagnosticSecondary.value ?: "",
@@ -59,12 +59,15 @@ class NewPatientViewModel @Inject constructor(
             woundHurt.value ?: false,
             woundPatternChanged.value ?: false,
             woundHasRelief.value ?: false,
-            patientData.id
-        ).also { patientsDAO.insert(it) }
+            patientDataId.toInt()
+        ))
 
-        imagePathList.value?.forEach {
-            patientsDAO.insert(LesionImageDTO(it, onlyLesionForNow.id))
+        val list = _imagePathList.value
+        list?.forEach {
+            patientsDAO.insert(LesionImageDTO(it, lesionId.toInt()))
         }
+
+        clearAllData()
     }
 
     fun clearAllData(){

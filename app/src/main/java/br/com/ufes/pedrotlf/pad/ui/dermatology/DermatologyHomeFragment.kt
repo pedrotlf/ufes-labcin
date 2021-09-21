@@ -1,4 +1,4 @@
-package br.com.ufes.pedrotlf.pad.dermatology
+package br.com.ufes.pedrotlf.pad.ui.dermatology
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,6 +28,11 @@ class DermatologyHomeFragment : BaseFragment() {
 
             fragmentDermatologyHomePatientAddButton.setOnClickListener {
                 val action = DermatologyHomeFragmentDirections.actionDermatologyHomeFragmentToNewPatientDataFragment()
+                findNavController().navigate(action)
+            }
+
+            fragmentDermatologyHomeFooterPatientListButton.setOnClickListener {
+                val action = DermatologyHomeFragmentDirections.actionDermatologyHomeFragmentToPatientsListFragment()
                 findNavController().navigate(action)
             }
         }

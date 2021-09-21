@@ -1,4 +1,4 @@
-package br.com.ufes.pedrotlf.pad.dermatology.newpatient
+package br.com.ufes.pedrotlf.pad.ui.dermatology.newpatient
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import android.widget.RadioGroup
 import androidx.core.view.children
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import br.com.ufes.pedrotlf.pad.BaseFragment

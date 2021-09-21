@@ -1,4 +1,4 @@
-package br.com.ufes.pedrotlf.pad.surgery
+package br.com.ufes.pedrotlf.pad.ui.surgery
 
 import android.os.Bundle
 import android.view.LayoutInflater

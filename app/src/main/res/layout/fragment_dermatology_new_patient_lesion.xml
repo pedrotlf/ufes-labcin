@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".dermatology.newpatient.NewPatientLesionFragment">
+    tools:context=".ui.dermatology.newpatient.NewPatientLesionFragment">
 
     <LinearLayout
         android:id="@+id/fragment_dermatology_new_patient_wound_header"

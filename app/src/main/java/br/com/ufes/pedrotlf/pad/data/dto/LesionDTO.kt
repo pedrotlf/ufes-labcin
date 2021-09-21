@@ -1,22 +1,28 @@
 package br.com.ufes.pedrotlf.pad.data.dto
 
 import android.os.Parcelable
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.Relation
+import androidx.room.*
 import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class LesionDTO(
     @Embedded
     val lessionData: LesionDataDTO,
 
     @Relation(parentColumn = "id", entityColumn = "lesionId", entity = LesionImageDTO::class)
     val images: List<LesionImageDTO>
-)
+): Parcelable
 
 @Parcelize
-@Entity(tableName = "table_lesion")
+@Entity(
+    tableName = "table_lesion",
+    foreignKeys = [
+        ForeignKey(
+            entity = PatientDataDTO::class,
+            parentColumns = ["id"],
+            childColumns = ["patientId"]
+        )]
+)
 data class LesionDataDTO(
     val bodyRegion: String,
     val diagnostic: String,
@@ -32,7 +38,15 @@ data class LesionDataDTO(
 ): Parcelable
 
 @Parcelize
-@Entity(tableName = "table_lesion_image")
+@Entity(
+    tableName = "table_lesion_image",
+    foreignKeys = [
+        ForeignKey(
+            entity = LesionDataDTO::class,
+            parentColumns = ["id"],
+            childColumns = ["lesionId"]
+        )]
+)
 data class LesionImageDTO(
     val image: String,
     val lesionId: Int,

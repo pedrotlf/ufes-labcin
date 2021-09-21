@@ -7,13 +7,14 @@ import androidx.room.PrimaryKey
 import androidx.room.Relation
 import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class PatientDTO(
     @Embedded
     val patientData: PatientDataDTO,
 
     @Relation(parentColumn = "id", entityColumn = "patientId", entity = LesionDataDTO::class)
     val lesions: List<LesionDTO>
-)
+): Parcelable
 
 @Parcelize
 @Entity(tableName = "table_patient")

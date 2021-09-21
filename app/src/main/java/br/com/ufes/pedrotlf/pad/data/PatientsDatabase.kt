@@ -10,7 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 import javax.inject.Provider
 
-@Database(entities = [PatientDataDTO::class, LesionDataDTO::class, LesionImageDTO::class], version = 1)
+@Database(entities = [PatientDataDTO::class, LesionDataDTO::class, LesionImageDTO::class], version = 3)
 abstract class PatientsDatabase : RoomDatabase(){
 
     abstract fun patientDAO(): PatientsDAO

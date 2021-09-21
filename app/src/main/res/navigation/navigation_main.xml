@@ -19,21 +19,24 @@
     </fragment>
     <fragment
         android:id="@+id/surgeryHomeFragment"
-        android:name="br.com.ufes.pedrotlf.pad.surgery.SurgeryHomeFragment"
+        android:name="br.com.ufes.pedrotlf.pad.ui.surgery.SurgeryHomeFragment"
         android:label="fragment_surgery_home"
         tools:layout="@layout/fragment_surgery_home" />
     <fragment
         android:id="@+id/dermatologyHomeFragment"
-        android:name="br.com.ufes.pedrotlf.pad.dermatology.DermatologyHomeFragment"
+        android:name="br.com.ufes.pedrotlf.pad.ui.dermatology.DermatologyHomeFragment"
         android:label="fragment_dermatology_home"
         tools:layout="@layout/fragment_dermatology_home" >
         <action
             android:id="@+id/action_dermatologyHomeFragment_to_newPatientDataFragment"
             app:destination="@id/newPatientDataFragment" />
+        <action
+            android:id="@+id/action_dermatologyHomeFragment_to_patientsListFragment"
+            app:destination="@id/patientsListFragment" />
     </fragment>
     <fragment
         android:id="@+id/newPatientDataFragment"
-        android:name="br.com.ufes.pedrotlf.pad.dermatology.newpatient.NewPatientDataFragment"
+        android:name="br.com.ufes.pedrotlf.pad.ui.dermatology.newpatient.NewPatientDataFragment"
         android:label="fragment_dermatology_new_patient_data"
         tools:layout="@layout/fragment_dermatology_new_patient_data" >
         <action
@@ -42,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/newPatientWoundFragment"
-        android:name="br.com.ufes.pedrotlf.pad.dermatology.newpatient.NewPatientLesionFragment"
+        android:name="br.com.ufes.pedrotlf.pad.ui.dermatology.newpatient.NewPatientLesionFragment"
         android:label="fragment_dermatology_new_patient_wound"
         tools:layout="@layout/fragment_dermatology_new_patient_lesion" >
         <action
@@ -51,11 +54,29 @@
     </fragment>
     <fragment
         android:id="@+id/newPatientLesionPhotosFragment"
-        android:name="br.com.ufes.pedrotlf.pad.dermatology.newpatient.NewPatientLesionPhotosFragment"
+        android:name="br.com.ufes.pedrotlf.pad.ui.dermatology.newpatient.NewPatientLesionPhotosFragment"
         android:label="fragment_dermatology_new_patient_lesion_photos"
         tools:layout="@layout/fragment_dermatology_new_patient_lesion_photos" >
         <action
             android:id="@+id/action_backTo_dermatologyHomeFragment"
             app:popUpTo="@id/dermatologyHomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientsListFragment"
+        android:name="br.com.ufes.pedrotlf.pad.ui.dermatology.patients.PatientsListFragment"
+        android:label="fragment_dermatology_patients_list"
+        tools:layout="@layout/fragment_dermatology_patients_list" >
+        <action
+            android:id="@+id/action_patientsListFragment_to_patientDetailsFragment"
+            app:destination="@id/patientDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientDetailsFragment"
+        android:name="br.com.ufes.pedrotlf.pad.ui.dermatology.patients.PatientDetailsFragment"
+        android:label="fragment_dermatology_patient_details"
+        tools:layout="@layout/fragment_dermatology_patient_details" >
+        <argument
+            android:name="patient"
+            app:argType="br.com.ufes.pedrotlf.pad.data.dto.PatientDTO" />
     </fragment>
 </navigation>
