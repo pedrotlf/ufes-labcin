@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import androidx.core.view.children
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
@@ -18,11 +20,16 @@ class NewPatientLesionFragment : BaseFragment() {
 
     private var _binding: FragmentDermatologyNewPatientLesionBinding? = null
     private val binding get() = _binding!!
-    private val newPatientViewModel: NewPatientViewModel by viewModels()
+    private val newPatientViewModel: NewPatientViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentDermatologyNewPatientLesionBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,7 +59,7 @@ class NewPatientLesionFragment : BaseFragment() {
         }}
     }
 
-    private fun RadioGroup.setBooleanRadioGroupListener(mutableLiveData: MutableLiveData<Boolean>){
+    private fun RadioGroup.setBooleanRadioGroupListener(mutableLiveData: MutableLiveData<Boolean?>){
         setOnCheckedChangeListener { group, checkedId ->
             val radioButton = group.findViewById<View>(checkedId)
             if(radioButton is RadioButton)
@@ -61,5 +68,20 @@ class NewPatientLesionFragment : BaseFragment() {
                     getString(R.string.word_nao) -> mutableLiveData.value = false
                 }
         }
+
+        val currentValue = mutableLiveData.value
+        if(currentValue != null)
+            children.forEach { button ->
+                if(button is RadioButton){
+                    if(currentValue && button.text == getString(R.string.word_sim)) {
+                        button.isChecked = true
+                        return
+                    }
+                    if(!currentValue && button.text == getString(R.string.word_nao)) {
+                        button.isChecked = true
+                        return
+                    }
+                }
+            }
     }
 }

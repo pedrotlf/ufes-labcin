@@ -8,6 +8,7 @@ buildscript {
         hiltVersion = "2.35"
         hiltAndroidXVersion = "1.0.0-alpha03"
         roomVersion = "2.3.0"
+        glideVersion = "4.12.0"
     }
     repositories {
         google()

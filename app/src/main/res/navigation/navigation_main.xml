@@ -53,5 +53,9 @@
         android:id="@+id/newPatientLesionPhotosFragment"
         android:name="br.com.ufes.pedrotlf.pad.dermatology.newpatient.NewPatientLesionPhotosFragment"
         android:label="fragment_dermatology_new_patient_lesion_photos"
-        tools:layout="@layout/fragment_dermatology_new_patient_lesion_photos" />
+        tools:layout="@layout/fragment_dermatology_new_patient_lesion_photos" >
+        <action
+            android:id="@+id/action_backTo_dermatologyHomeFragment"
+            app:popUpTo="@id/dermatologyHomeFragment" />
+    </fragment>
 </navigation>
