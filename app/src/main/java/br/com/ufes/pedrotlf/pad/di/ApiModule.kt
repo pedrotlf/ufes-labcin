@@ -24,7 +24,7 @@ object ApiModule {
     fun provideRetrofit(): Retrofit {
         val client = OkHttpClient()
             .newBuilder()
-            .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
+            .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.HEADERS })
             .connectTimeout(0, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
@@ -35,9 +35,10 @@ object ApiModule {
             .addConverterFactory(
                 JacksonConverterFactory.create(
                     jacksonObjectMapper()
-                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-                .disable(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES)
-                .setSerializationInclusion(JsonInclude.Include.NON_NULL))
+                        .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                        .disable(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES)
+                        .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                )
             )
             .client(client)
             .build()
