@@ -31,15 +31,16 @@ interface SadeApi {
         @Path("cartaoSus") susNumber: String, @Query("token") token: String
     ): SurgeryPatientDTO
 
+    @Multipart
     @POST("sade/api-smartphone/pacienteCirurgia/novaLesao/{cartaoSus}")
     suspend fun sendSurgeryPatientLesion(
         @Path("cartaoSus") susNumber: String, @Query("token") token: String,
-        @Query("diaMaior") diaMaior: String, @Query("diaMenor") diaMenor: String,
-        @Query("diagnostico") diagnosis: String, @Query("diagnosticoSec") secDiagnosis: String,
-        @Query("procedimento") procedure: String,
-        @Query("obs") obs: String, @Query("cirurgiao") surgeon: String,
-        @Part("imagem") images: List<MultipartBody.Part>,
-    )
+        @Query("regiao") region: String, @Query("diaMaior") diaMaior: String,
+        @Query("diaMenor") diaMenor: String, @Query("diagnostico") diagnosis: String,
+        @Query("diagnosticoSec") secDiagnosis: String,
+        @Query("procedimento") procedure: String, @Query("obs") obs: String,
+        @Query("cirurgiao") surgeon: String, @Part images: List<MultipartBody.Part>,
+    ): ResponseBody
 
     @GET
     suspend fun testConnection(@Url url: String): ResponseBody

@@ -38,8 +38,8 @@
     <string name="dermatology_new_patient_lesion_relief">Lesão em relevo?</string>
     <string name="dermatology_new_patient_lesion_next">@string/word_next</string>
 
-    <string name="dermatology_new_patient_lesion_photos_camera">Câmera</string>
-    <string name="dermatology_new_patient_lesion_photos_album">Álbum</string>
+    <string name="dermatology_new_patient_lesion_photos_camera">@string/word_camera</string>
+    <string name="dermatology_new_patient_lesion_photos_album">@string/word_album</string>
     <string name="dermatology_new_patient_lesion_photos_confirm">Vincular lesão ao paciente</string>
 
     <string name="footer_change_function_button">Escolher outra função</string>
@@ -61,15 +61,18 @@
     <string name="surgery_patient_details_diastolic_pressure_prefix">Pressão diastólica:</string>
     <string name="surgery_patient_details_lesions_number_prefix">Nº de lesões:</string>
 
-    <string name="surgery_patient_details_header">Detalhes da lesão</string>
-
-    <string name="surgery_patient_details_higher_day_hint">Dia maior</string>
-    <string name="surgery_patient_details_lower_day_hint">Dia menor</string>
+    <string name="surgery_patient_details_header">Cirurgia - Detalhes da lesão</string>
+    <string name="surgery_patient_details_region_hint">Região da lesão</string>
+    <string name="surgery_patient_details_higher_diameter_hint">Diâmetro maior</string>
+    <string name="surgery_patient_details_lower_diameter_hint">Diâmetro menor</string>
     <string name="surgery_patient_details_diagnosis_hint">Diagnóstico</string>
     <string name="surgery_patient_details_diagnosis_secondary_hint">Diagnóstico secundário</string>
     <string name="surgery_patient_details_procedure_hint">Procedimento</string>
     <string name="surgery_patient_details_obs_hint">Observações</string>
     <string name="surgery_patient_details_surgeon_hint">Cirurgião</string>
+
+    <string name="surgery_patient_photos_header">Cirurgia - Imagens da lesão</string>
+    <string name="surgery_patient_photos_confirm">Enviar dados da lesão</string>
 
     <string name="loading_default_text">Carregando...</string>
 
@@ -80,4 +83,6 @@
     <string name="word_confirm">Confirmar</string>
     <string name="word_continue">Continuar</string>
     <string name="word_next">Próximo</string>
+    <string name="word_camera">Câmera</string>
+    <string name="word_album">Álbum</string>
 </resources>

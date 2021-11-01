@@ -35,9 +35,9 @@ class SadeRepository constructor(private val sadeApi: SadeApi) {
         susNumber: String,
         lesion: SurgeryPatientLesionDTO,
         images: List<String>
-    ){
+    ): ResponseBody{
         return sadeApi.sendSurgeryPatientLesion(susNumber, BuildConfig.REPO_API_TOKEN,
-            lesion.diaMaior, lesion.diaMenor, lesion.diagnosis, lesion.secDiagnosis,
+            lesion.region, lesion.diaMaior, lesion.diaMenor, lesion.diagnosis, lesion.secDiagnosis,
             lesion.procedure, lesion.obs, lesion.surgeon, 
             images.generateMultipartList("imagem")
         )

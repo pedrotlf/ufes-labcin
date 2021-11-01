@@ -5,6 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class SurgeryPatientLesionDTO(
+    val region: String,
     val diaMaior: String,
     val diaMenor: String,
     val diagnosis: String,

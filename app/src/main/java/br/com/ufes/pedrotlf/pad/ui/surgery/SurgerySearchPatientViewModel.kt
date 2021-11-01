@@ -17,6 +17,8 @@ class SurgerySearchPatientViewModel @Inject constructor(
     private val sadeRepository: SadeRepository
 ): ViewModel() {
 
+    val susNumber = MutableLiveData<String>()
+
     private val _patientRequest = SingleLiveEvent<Resource<SurgeryPatientDTO>>()
     val patientRequest: LiveData<Resource<SurgeryPatientDTO>> = _patientRequest
 

@@ -100,5 +100,29 @@
         <argument
             android:name="surgeryPatient"
             app:argType="br.com.ufes.pedrotlf.pad.data.dto.SurgeryPatientDTO" />
+        <action
+            android:id="@+id/action_surgeryPatientDetailsFragment_to_surgeryPatientPhotosFragment"
+            app:destination="@id/surgeryPatientPhotosFragment" />
+        <argument
+            android:name="susNumber"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/surgeryPatientPhotosFragment"
+        android:name="br.com.ufes.pedrotlf.pad.ui.surgery.SurgeryPatientPhotosFragment"
+        android:label="fragment_surgery_patient_photos"
+        tools:layout="@layout/fragment_surgery_patient_photos" >
+        <argument
+            android:name="surgeryPatient"
+            app:argType="br.com.ufes.pedrotlf.pad.data.dto.SurgeryPatientDTO" />
+        <argument
+            android:name="surgeryPatientLesion"
+            app:argType="br.com.ufes.pedrotlf.pad.data.dto.SurgeryPatientLesionDTO" />
+        <argument
+            android:name="susNumber"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_backTo_surgeryHomeFragment"
+            app:popUpTo="@id/surgeryHomeFragment" />
     </fragment>
 </navigation>

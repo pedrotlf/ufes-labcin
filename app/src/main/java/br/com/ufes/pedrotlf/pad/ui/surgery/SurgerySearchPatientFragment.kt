@@ -27,13 +27,21 @@ class SurgerySearchPatientFragment: BaseFragment() {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
             fragmentSurgerySearchPatientButton.setOnClickListener {
                 val susNumber = fragmentSurgerySearchPatientSusNumber.text.toString()
-                if (susNumber.isNotBlank()) searchViewModel.searchPatient(susNumber)
+                if (susNumber.isNotBlank()) searchViewModel.apply {
+                    this.susNumber.value = susNumber
+                    searchPatient(susNumber)
+                }
             }
         }
 
@@ -71,7 +79,11 @@ class SurgerySearchPatientFragment: BaseFragment() {
         }
 
         builder.setView(binding.root).setPositiveButton(R.string.word_continue) { dialog, _ ->
-            val action = SurgerySearchPatientFragmentDirections.actionSurgerySearchPatientFragmentToSurgeryPatientDetailsFragment(patient)
+            val number = searchViewModel.susNumber.value ?: ""
+            val action = SurgerySearchPatientFragmentDirections.actionSurgerySearchPatientFragmentToSurgeryPatientDetailsFragment(
+                patient,
+                number
+            )
             findNavController().navigate(action)
             dialog.dismiss()
         }

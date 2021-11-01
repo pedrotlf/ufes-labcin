@@ -65,7 +65,7 @@
                 </LinearLayout>
 
                 <EditText
-                    android:id="@+id/fragment_surgery_patient_details_higher_day"
+                    android:id="@+id/fragment_surgery_patient_details_region"
                     style="@style/EditTextStyle"
                     android:gravity="start"
                     android:inputType="textAutoComplete"
@@ -74,21 +74,37 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginHorizontal="@dimen/spacingMargin"
                     android:singleLine="true"
-                    android:hint="@string/surgery_patient_details_higher_day_hint"
+                    android:hint="@string/surgery_patient_details_region_hint"
                     android:textColor="@color/color_primary"
                     android:autofillHints="none" />
 
                 <EditText
-                    android:id="@+id/fragment_surgery_patient_details_lower_day"
+                    android:id="@+id/fragment_surgery_patient_details_higher_diameter"
                     style="@style/EditTextStyle"
                     android:gravity="start"
-                    android:inputType="textAutoComplete"
+                    android:inputType="number"
+                    android:digits="0123456789."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginHorizontal="@dimen/spacingMargin"
                     android:singleLine="true"
-                    android:hint="@string/surgery_patient_details_lower_day_hint"
+                    android:hint="@string/surgery_patient_details_higher_diameter_hint"
+                    android:textColor="@color/color_primary"
+                    android:autofillHints="none" />
+
+                <EditText
+                    android:id="@+id/fragment_surgery_patient_details_lower_diameter"
+                    style="@style/EditTextStyle"
+                    android:gravity="start"
+                    android:inputType="number"
+                    android:digits="0123456789."
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="@dimen/spacingMargin"
+                    android:singleLine="true"
+                    android:hint="@string/surgery_patient_details_lower_diameter_hint"
                     android:textColor="@color/color_primary"
                     android:autofillHints="none" />
 
@@ -138,12 +154,11 @@
                     android:id="@+id/fragment_surgery_patient_details_obs"
                     style="@style/EditTextStyle"
                     android:gravity="start"
-                    android:inputType="textAutoComplete"
+                    android:inputType="textMultiLine|textAutoComplete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginHorizontal="@dimen/spacingMargin"
-                    android:singleLine="true"
                     android:hint="@string/surgery_patient_details_obs_hint"
                     android:textColor="@color/color_primary"
                     android:autofillHints="none" />
@@ -187,6 +202,4 @@
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
