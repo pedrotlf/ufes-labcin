@@ -180,6 +180,36 @@
                 tools:text="8080"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fragment_home_footer_test_connection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_footer_server_connection_status_test"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:letterSpacing="0"
+                android:padding="8dp"
+                app:icon="@drawable/outline_update_24"
+                app:iconTint="@color/white"/>
+
+            <TextView
+                android:id="@+id/fragment_home_server_connection_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/red_dark"
+                tools:text="@string/home_footer_server_connection_status_failed"/>
+        </LinearLayout>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_home_footer_change_settings"
             android:layout_width="match_parent"

@@ -24,4 +24,8 @@ class DermatologyRepository constructor(private val dermatologyApi: DermatologyA
             lesionImages.generateMultipartList("imagem")
         )
     }
+
+    suspend fun testConnection(newBaseUrl: String): ResponseBody{
+        return dermatologyApi.testConnection(newBaseUrl + DermatologyApi.TEST_CONNECTION_URL)
+    }
 }

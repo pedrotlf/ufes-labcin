@@ -1,17 +1,17 @@
 package br.com.ufes.pedrotlf.pad.ui
 
-import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import br.com.ufes.pedrotlf.pad.BaseFragment
 import br.com.ufes.pedrotlf.pad.R
+import br.com.ufes.pedrotlf.pad.data.Resource
 import br.com.ufes.pedrotlf.pad.databinding.FragmentPadHomeBinding
 import br.com.ufes.pedrotlf.pad.databinding.FragmentServerSettingsChangeBinding
 
@@ -43,7 +43,31 @@ class PadHomeFragment: BaseFragment() {
             setServerSettingsInfo()
 
             fragmentHomeFooterChangeSettings.setOnClickListener {
-                context?.let{ it.showDialog() }
+                context?.showDialog()
+            }
+
+            fragmentHomeFooterTestConnection.setOnClickListener {
+                homeViewModel.testConnection()
+            }
+
+            homeViewModel.connectionStatus.observe(viewLifecycleOwner){
+                when(it){
+                    is Resource.Loading -> showLoading()
+                    is Resource.Success -> {
+                        dismissLoading()
+                        fragmentHomeServerConnectionStatus.text = getString(R.string.home_footer_server_connection_status_ok)
+                        context?.let { ctx ->
+                            fragmentHomeServerConnectionStatus.setTextColor(ContextCompat.getColor(ctx, R.color.green_dark))
+                        }
+                    }
+                    is Resource.Failure -> {
+                        dismissLoading()
+                        fragmentHomeServerConnectionStatus.text = getString(R.string.home_footer_server_connection_status_failed)
+                        context?.let { ctx ->
+                            fragmentHomeServerConnectionStatus.setTextColor(ContextCompat.getColor(ctx, R.color.red_dark))
+                        }
+                    }
+                }
             }
         }
     }

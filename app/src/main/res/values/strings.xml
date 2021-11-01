@@ -6,6 +6,9 @@
     <string name="home_footer_change_settings">Alterar configurações da conexão</string>
     <string name="home_footer_server_ip_prefix">IP do servidor:</string>
     <string name="home_footer_server_port_prefix">Porta:</string>
+    <string name="home_footer_server_connection_status_test">Testar conexão</string>
+    <string name="home_footer_server_connection_status_ok">Conectado</string>
+    <string name="home_footer_server_connection_status_failed">Não conectado</string>
 
     <string name="home_dialog_server_ip_hint">IP. Exemplo: 192.168.0.150</string>
     <string name="home_dialog_server_port_hint">Porta. Exemplo: 8080</string>

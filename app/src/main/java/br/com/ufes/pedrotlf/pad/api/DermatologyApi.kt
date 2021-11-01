@@ -20,4 +20,11 @@ interface DermatologyApi {
         @Query("doeu") hurt: Boolean, @Query("mudou") changed: Boolean,
         @Part imagem: List<MultipartBody.Part>
     ): ResponseBody
+
+    @GET
+    suspend fun testConnection(@Url url: String): ResponseBody
+
+    companion object{
+        const val TEST_CONNECTION_URL = "sade/api-smartphone/ack"
+    }
 }
