@@ -12,8 +12,8 @@ import androidx.navigation.fragment.findNavController
 import br.com.ufes.pedrotlf.pad.BaseFragment
 import br.com.ufes.pedrotlf.pad.R
 import br.com.ufes.pedrotlf.pad.data.Resource
+import br.com.ufes.pedrotlf.pad.databinding.FragmentDialogServerSettingsChangeBinding
 import br.com.ufes.pedrotlf.pad.databinding.FragmentPadHomeBinding
-import br.com.ufes.pedrotlf.pad.databinding.FragmentServerSettingsChangeBinding
 
 class PadHomeFragment: BaseFragment() {
 
@@ -83,7 +83,7 @@ class PadHomeFragment: BaseFragment() {
         val builder = AlertDialog.Builder(this)
 
         val inflater = layoutInflater
-        val binding = FragmentServerSettingsChangeBinding.inflate(inflater)
+        val binding = FragmentDialogServerSettingsChangeBinding.inflate(inflater)
 
         homeViewModel.serverIpAndPort.apply {
             getOrNull(0)?.let { binding.serverIp.setText(it) }

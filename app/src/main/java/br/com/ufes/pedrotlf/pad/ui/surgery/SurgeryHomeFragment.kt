@@ -25,6 +25,11 @@ class SurgeryHomeFragment : BaseFragment(){
             fragmentSurgeryHomeFooterButton.setOnClickListener {
                 findNavController().popBackStack()
             }
+
+            fragmentSurgeryHomeCirurgiaButton.setOnClickListener {
+                val action = SurgeryHomeFragmentDirections.actionSurgeryHomeFragmentToSurgerySearchPatientFragment()
+                findNavController().navigate(action)
+            }
         }
     }
 }

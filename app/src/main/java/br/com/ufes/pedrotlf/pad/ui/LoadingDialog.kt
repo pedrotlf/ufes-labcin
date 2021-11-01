@@ -2,7 +2,7 @@ package br.com.ufes.pedrotlf.pad.ui
 
 import android.app.Activity
 import androidx.appcompat.app.AlertDialog
-import br.com.ufes.pedrotlf.pad.databinding.FragmentLoadingBinding
+import br.com.ufes.pedrotlf.pad.databinding.FragmentDialogLoadingBinding
 
 class LoadingDialog(private val activity: Activity) {
 
@@ -12,7 +12,7 @@ class LoadingDialog(private val activity: Activity) {
         val builder = AlertDialog.Builder(activity)
 
         val inflater = activity.layoutInflater
-        val binding = FragmentLoadingBinding.inflate(inflater)
+        val binding = FragmentDialogLoadingBinding.inflate(inflater)
 
         loadingMessage?.let {
             binding.loadingText.text = it

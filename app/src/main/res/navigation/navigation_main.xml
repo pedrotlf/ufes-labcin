@@ -21,7 +21,11 @@
         android:id="@+id/surgeryHomeFragment"
         android:name="br.com.ufes.pedrotlf.pad.ui.surgery.SurgeryHomeFragment"
         android:label="fragment_surgery_home"
-        tools:layout="@layout/fragment_surgery_home" />
+        tools:layout="@layout/fragment_surgery_home" >
+        <action
+            android:id="@+id/action_surgeryHomeFragment_to_surgerySearchPatientFragment"
+            app:destination="@id/surgerySearchPatientFragment" />
+    </fragment>
     <fragment
         android:id="@+id/dermatologyHomeFragment"
         android:name="br.com.ufes.pedrotlf.pad.ui.dermatology.DermatologyHomeFragment"
@@ -79,4 +83,9 @@
             android:name="patient"
             app:argType="br.com.ufes.pedrotlf.pad.data.dto.PatientDTO" />
     </fragment>
+    <fragment
+        android:id="@+id/surgerySearchPatientFragment"
+        android:name="br.com.ufes.pedrotlf.pad.ui.surgery.SurgerySearchPatientFragment"
+        android:label="fragment_surgery_search_patient"
+        tools:layout="@layout/fragment_surgery_search_patient" />
 </navigation>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.surgery.SurgerySearchPatientFragment">
+
+    <LinearLayout
+        android:id="@+id/fragment_surgery_search_patient_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/color_primary"
+        android:padding="10dp"
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="@string/surgery_search_patient_header"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/fragment_surgery_search_patient_header"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="128dp">
+
+            <EditText
+                android:id="@+id/fragment_surgery_search_patient_sus_number"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/spacingMargin"
+                android:layout_marginTop="20dp"
+                android:autofillHints="none"
+                android:gravity="start"
+                android:hint="@string/dermatology_new_patient_data_sus_number"
+                android:inputType="number"
+                android:maxLength="15"
+                android:singleLine="true"
+                android:textColor="@color/color_primary" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fragment_surgery_search_patient_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/spacingMargin"
+                android:layout_marginTop="32dp"
+                android:letterSpacing="0"
+                android:padding="16dp"
+                android:text="@string/surgery_search_patient_header"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:icon="@drawable/outline_person_search_24"
+                app:iconGravity="start"
+                app:iconTint="@color/white" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
