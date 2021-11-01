@@ -5,8 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.ufes.pedrotlf.pad.MyPrefs
-import br.com.ufes.pedrotlf.pad.api.DermatologyApi
-import br.com.ufes.pedrotlf.pad.data.DermatologyRepository
+import br.com.ufes.pedrotlf.pad.data.SadeRepository
 import br.com.ufes.pedrotlf.pad.data.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PadHomeViewModel @Inject constructor(
-    private val repository: DermatologyRepository,
+    private val repository: SadeRepository,
     private val prefs: MyPrefs
 ): ViewModel() {
 

@@ -2,9 +2,7 @@ package br.com.ufes.pedrotlf.pad.ui.dermatology.patients
 
 import android.util.Log
 import androidx.lifecycle.*
-import br.com.ufes.pedrotlf.pad.BuildConfig
-import br.com.ufes.pedrotlf.pad.MyPrefs
-import br.com.ufes.pedrotlf.pad.data.DermatologyRepository
+import br.com.ufes.pedrotlf.pad.data.SadeRepository
 import br.com.ufes.pedrotlf.pad.data.PatientsDAO
 import br.com.ufes.pedrotlf.pad.data.Resource
 import br.com.ufes.pedrotlf.pad.data.dto.PatientDTO
@@ -16,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PatientsViewModel @Inject constructor(
     private val patientsDAO: PatientsDAO,
-    private val dermatologyRepository: DermatologyRepository,
+    private val sadeRepository: SadeRepository,
 ) : ViewModel() {
 
     val patients = patientsDAO.getPatients().asLiveData()
@@ -38,10 +36,9 @@ class PatientsViewModel @Inject constructor(
         _sendPatientRequest.value = Resource.Loading
         patientsList.forEach { patient ->
             runCatching {
-                dermatologyRepository.sendDermatologyPatient(
+                sadeRepository.sendDermatologyPatientLesion(
                     patient.patientData,
-                    patient.lesions.first(),
-                    BuildConfig.REPO_API_TOKEN
+                    patient.lesions.first()
                 )
             }.onSuccess {
                 deletePatient(patient)

@@ -1,7 +1,7 @@
 package br.com.ufes.pedrotlf.pad.di
 
 import br.com.ufes.pedrotlf.pad.MyPrefs
-import br.com.ufes.pedrotlf.pad.api.DermatologyApi
+import br.com.ufes.pedrotlf.pad.api.SadeApi
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -14,7 +14,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -45,6 +44,6 @@ object ApiModule {
     }
 
     @Provides
-    fun provideOrderApi(retrofit: Retrofit): DermatologyApi =
-        retrofit.create(DermatologyApi::class.java)
+    fun provideOrderApi(retrofit: Retrofit): SadeApi =
+        retrofit.create(SadeApi::class.java)
 }

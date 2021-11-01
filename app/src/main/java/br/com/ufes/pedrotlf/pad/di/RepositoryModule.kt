@@ -1,19 +1,18 @@
 package br.com.ufes.pedrotlf.pad.di
 
-import br.com.ufes.pedrotlf.pad.api.DermatologyApi
-import br.com.ufes.pedrotlf.pad.data.DermatologyRepository
+import br.com.ufes.pedrotlf.pad.api.SadeApi
+import br.com.ufes.pedrotlf.pad.data.SadeRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
     @Provides
-    fun provideOrderRepository(dermatologyApi: DermatologyApi): DermatologyRepository {
-        return DermatologyRepository(dermatologyApi)
+    fun provideOrderRepository(sadeApi: SadeApi): SadeRepository {
+        return SadeRepository(sadeApi)
     }
 }
