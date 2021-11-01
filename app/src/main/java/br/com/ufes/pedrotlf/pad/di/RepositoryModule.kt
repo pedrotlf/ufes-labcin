@@ -12,7 +12,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
-    @Singleton
     @Provides
     fun provideOrderRepository(dermatologyApi: DermatologyApi): DermatologyRepository {
         return DermatologyRepository(dermatologyApi)

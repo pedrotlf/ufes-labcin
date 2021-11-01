@@ -3,6 +3,12 @@
     <string name="app_name_full">Programa de Assistência Dermatológica</string>
 
     <string name="home_body_title">Escolha uma função</string>
+    <string name="home_footer_change_settings">Alterar configurações da conexão</string>
+    <string name="home_footer_server_ip_prefix">IP do servidor:</string>
+    <string name="home_footer_server_port_prefix">Porta:</string>
+
+    <string name="home_dialog_server_ip_hint">IP. Exemplo: 192.168.0.150</string>
+    <string name="home_dialog_server_port_hint">Porta. Exemplo: 8080</string>
 
     <string name="surgery_home_body_button">Adicionar lesão</string>
 
@@ -46,4 +52,5 @@
     <string name="word_dermatologia">Dermatologia</string>
     <string name="word_sim">Sim</string>
     <string name="word_nao">Não</string>
+    <string name="word_confirm">Confirmar</string>
 </resources>

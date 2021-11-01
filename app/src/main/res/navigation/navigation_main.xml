@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/padHomeFragment"
-        android:name="br.com.ufes.pedrotlf.pad.PadHomeFragment"
+        android:name="br.com.ufes.pedrotlf.pad.ui.PadHomeFragment"
         android:label="fragment_pad_home"
         tools:layout="@layout/fragment_pad_home" >
         <action

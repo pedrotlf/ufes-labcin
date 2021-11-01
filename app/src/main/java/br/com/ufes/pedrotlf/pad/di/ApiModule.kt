@@ -1,5 +1,6 @@
 package br.com.ufes.pedrotlf.pad.di
 
+import br.com.ufes.pedrotlf.pad.MyPrefs
 import br.com.ufes.pedrotlf.pad.api.DermatologyApi
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.DeserializationFeature
@@ -20,8 +21,7 @@ import javax.inject.Singleton
 object ApiModule {
 
     @Provides
-    @Singleton
-    fun provideRetrofit(): Retrofit {
+    fun provideRetrofit(prefs: MyPrefs): Retrofit {
         val client = OkHttpClient()
             .newBuilder()
             .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.HEADERS })
@@ -31,7 +31,7 @@ object ApiModule {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl(DermatologyApi.baseUrl)
+            .baseUrl(prefs.serverUrl)
             .addConverterFactory(
                 JacksonConverterFactory.create(
                     jacksonObjectMapper()
@@ -45,7 +45,6 @@ object ApiModule {
     }
 
     @Provides
-    @Singleton
     fun provideOrderApi(retrofit: Retrofit): DermatologyApi =
         retrofit.create(DermatologyApi::class.java)
 }

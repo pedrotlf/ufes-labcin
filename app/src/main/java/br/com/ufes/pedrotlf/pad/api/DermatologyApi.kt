@@ -8,7 +8,7 @@ interface DermatologyApi {
 
     @Multipart
     @Headers("Accept: application/json")
-    @POST("pacienteDermato/novaLesao/{cartaoSus}")
+    @POST("sade/api-smartphone/pacienteDermato/novaLesao/{cartaoSus}")
     suspend fun sendDermatologyPatient(
         @Path("cartaoSus") susNumber: String, @Query("token") token: String,
         @Query("idade") age: Int, @Query("localAtendimento") serviceCity: String?,
@@ -20,8 +20,4 @@ interface DermatologyApi {
         @Query("doeu") hurt: Boolean, @Query("mudou") changed: Boolean,
         @Part imagem: List<MultipartBody.Part>
     ): ResponseBody
-
-    companion object {
-        const val baseUrl = "http://192.168.0.142:8081/sade/api-smartphone/"
-    }
 }
