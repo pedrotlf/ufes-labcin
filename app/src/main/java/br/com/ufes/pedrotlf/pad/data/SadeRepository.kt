@@ -33,12 +33,13 @@ class SadeRepository constructor(private val sadeApi: SadeApi) {
 
     suspend fun sendSurgeryPatientLesion(
         susNumber: String,
-        lesion: SurgeryPatientLesionDTO
+        lesion: SurgeryPatientLesionDTO,
+        images: List<String>
     ){
         return sadeApi.sendSurgeryPatientLesion(susNumber, BuildConfig.REPO_API_TOKEN,
             lesion.diaMaior, lesion.diaMenor, lesion.diagnosis, lesion.secDiagnosis,
             lesion.procedure, lesion.obs, lesion.surgeon, 
-            lesion.images.generateMultipartList("imagem")
+            images.generateMultipartList("imagem")
         )
     }
 

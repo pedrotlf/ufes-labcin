@@ -1,5 +1,9 @@
 package br.com.ufes.pedrotlf.pad.data.dto
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class SurgeryPatientLesionDTO(
     val diaMaior: String,
     val diaMenor: String,
@@ -8,5 +12,4 @@ data class SurgeryPatientLesionDTO(
     val procedure: String,
     val obs: String,
     val surgeon: String,
-    val images: List<String>
-)
+): Parcelable

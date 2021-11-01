@@ -27,8 +27,8 @@
     <string name="dermatology_new_patient_data_next">Próximo</string>
 
     <string name="dermatology_new_patient_lesion_body_region">Região da lesão</string>
-    <string name="dermatology_new_patient_lesion_diagnostic">Diagnóstico</string>
-    <string name="dermatology_new_patient_lesion_diagnostic_secondary">Diagnóstico secundário</string>
+    <string name="dermatology_new_patient_lesion_diagnosis">Diagnóstico</string>
+    <string name="dermatology_new_patient_lesion_diagnosis_secondary">Diagnóstico secundário</string>
     <string name="dermatology_new_patient_lesion_related_title">Em relação à lesão:</string>
     <string name="dermatology_new_patient_lesion_grown">Cresceu?</string>
     <string name="dermatology_new_patient_lesion_itched">Coçou?</string>
@@ -36,7 +36,7 @@
     <string name="dermatology_new_patient_lesion_hurt">Doeu?</string>
     <string name="dermatology_new_patient_lesion_pattern_changed">Mudou o padrão?</string>
     <string name="dermatology_new_patient_lesion_relief">Lesão em relevo?</string>
-    <string name="dermatology_new_patient_lesion_next">Próximo</string>
+    <string name="dermatology_new_patient_lesion_next">@string/word_next</string>
 
     <string name="dermatology_new_patient_lesion_photos_camera">Câmera</string>
     <string name="dermatology_new_patient_lesion_photos_album">Álbum</string>
@@ -51,6 +51,26 @@
 
     <string name="surgery_search_patient_header">Buscar Paciente</string>
 
+    <string name="surgery_patient_details_name_prefix">Nome:</string>
+    <string name="surgery_patient_details_medical_record_prefix">Protuário:</string>
+    <string name="surgery_patient_details_allergy_prefix">Alergia:</string>
+    <string name="surgery_patient_details_has_prefix">HAS:</string>
+    <string name="surgery_patient_details_diabetes_prefix">Diabetes:</string>
+    <string name="surgery_patient_details_anticoagulant_prefix">Anticoagulante:</string>
+    <string name="surgery_patient_details_systolic_pressure_prefix">Pressão sistólica:</string>
+    <string name="surgery_patient_details_diastolic_pressure_prefix">Pressão diastólica:</string>
+    <string name="surgery_patient_details_lesions_number_prefix">Nº de lesões:</string>
+
+    <string name="surgery_patient_details_header">Detalhes da lesão</string>
+
+    <string name="surgery_patient_details_higher_day_hint">Dia maior</string>
+    <string name="surgery_patient_details_lower_day_hint">Dia menor</string>
+    <string name="surgery_patient_details_diagnosis_hint">Diagnóstico</string>
+    <string name="surgery_patient_details_diagnosis_secondary_hint">Diagnóstico secundário</string>
+    <string name="surgery_patient_details_procedure_hint">Procedimento</string>
+    <string name="surgery_patient_details_obs_hint">Observações</string>
+    <string name="surgery_patient_details_surgeon_hint">Cirurgião</string>
+
     <string name="loading_default_text">Carregando...</string>
 
     <string name="word_cirurgia">Cirurgia</string>
@@ -58,4 +78,6 @@
     <string name="word_sim">Sim</string>
     <string name="word_nao">Não</string>
     <string name="word_confirm">Confirmar</string>
+    <string name="word_continue">Continuar</string>
+    <string name="word_next">Próximo</string>
 </resources>

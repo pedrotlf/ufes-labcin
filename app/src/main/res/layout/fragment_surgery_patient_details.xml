@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.surgery.SurgeryPatientDetailsFragment">
+
+    <LinearLayout
+        android:id="@+id/fragment_surgery_patient_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/color_primary"
+        android:padding="10dp"
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="@string/surgery_patient_details_header"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/fragment_surgery_patient_details_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/fragment_surgery_patient_details"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/fragment_surgery_patient_details_footer">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="@dimen/spacingMargin">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="@string/surgery_patient_details_name_prefix"/>
+                    <TextView
+                        android:id="@+id/fragment_surgery_patient_details_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        tools:text="Pedro Flores"/>
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/fragment_surgery_patient_details_higher_day"
+                    style="@style/EditTextStyle"
+                    android:gravity="start"
+                    android:inputType="textAutoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="@dimen/spacingMargin"
+                    android:singleLine="true"
+                    android:hint="@string/surgery_patient_details_higher_day_hint"
+                    android:textColor="@color/color_primary"
+                    android:autofillHints="none" />
+
+                <EditText
+                    android:id="@+id/fragment_surgery_patient_details_lower_day"
+                    style="@style/EditTextStyle"
+                    android:gravity="start"
+                    android:inputType="textAutoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="@dimen/spacingMargin"
+                    android:singleLine="true"
+                    android:hint="@string/surgery_patient_details_lower_day_hint"
+                    android:textColor="@color/color_primary"
+                    android:autofillHints="none" />
+
+                <EditText
+                    android:id="@+id/fragment_surgery_patient_details_diagnosis"
+                    style="@style/EditTextStyle"
+                    android:gravity="start"
+                    android:inputType="textAutoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="@dimen/spacingMargin"
+                    android:singleLine="true"
+                    android:hint="@string/surgery_patient_details_diagnosis_hint"
+                    android:textColor="@color/color_primary"
+                    android:autofillHints="none" />
+
+                <EditText
+                    android:id="@+id/fragment_surgery_patient_details_diagnosis_secondary"
+                    style="@style/EditTextStyle"
+                    android:gravity="start"
+                    android:inputType="textAutoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="@dimen/spacingMargin"
+                    android:singleLine="true"
+                    android:hint="@string/surgery_patient_details_diagnosis_secondary_hint"
+                    android:textColor="@color/color_primary"
+                    android:autofillHints="none" />
+
+                <EditText
+                    android:id="@+id/fragment_surgery_patient_details_procedure"
+                    style="@style/EditTextStyle"
+                    android:gravity="start"
+                    android:inputType="textAutoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="@dimen/spacingMargin"
+                    android:singleLine="true"
+                    android:hint="@string/surgery_patient_details_procedure_hint"
+                    android:textColor="@color/color_primary"
+                    android:autofillHints="none" />
+
+                <EditText
+                    android:id="@+id/fragment_surgery_patient_details_obs"
+                    style="@style/EditTextStyle"
+                    android:gravity="start"
+                    android:inputType="textAutoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="@dimen/spacingMargin"
+                    android:singleLine="true"
+                    android:hint="@string/surgery_patient_details_obs_hint"
+                    android:textColor="@color/color_primary"
+                    android:autofillHints="none" />
+
+                <EditText
+                    android:id="@+id/fragment_surgery_patient_details_surgeon"
+                    style="@style/EditTextStyle"
+                    android:gravity="start"
+                    android:inputType="textAutoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginHorizontal="@dimen/spacingMargin"
+                    android:singleLine="true"
+                    android:hint="@string/surgery_patient_details_surgeon_hint"
+                    android:textColor="@color/color_primary"
+                    android:autofillHints="none" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fragment_surgery_patient_details_footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/fragment_surgery_patient_details_footer_next_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/spacingMargin"
+                    android:text="@string/word_next"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:letterSpacing="0"
+                    android:padding="16dp"
+                    app:icon="@drawable/outline_navigate_next_24"
+                    app:iconTint="@color/white"
+                    app:iconGravity="end"/>
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
