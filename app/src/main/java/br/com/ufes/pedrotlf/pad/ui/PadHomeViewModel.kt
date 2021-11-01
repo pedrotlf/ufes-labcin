@@ -27,6 +27,7 @@ class PadHomeViewModel @Inject constructor(
 
     fun changeServerUrl(newUrl: String){
         prefs.serverUrl = newUrl
+        testConnection()
     }
 
     private val _connectionStatus = MutableLiveData<Resource<Nothing?>>()
