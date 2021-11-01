@@ -2,6 +2,7 @@ package br.com.ufes.pedrotlf.pad.ui.dermatology.patients
 
 import android.util.Log
 import androidx.lifecycle.*
+import br.com.ufes.pedrotlf.pad.SingleLiveEvent
 import br.com.ufes.pedrotlf.pad.data.SadeRepository
 import br.com.ufes.pedrotlf.pad.data.PatientsDAO
 import br.com.ufes.pedrotlf.pad.data.Resource
@@ -19,7 +20,7 @@ class PatientsViewModel @Inject constructor(
 
     val patients = patientsDAO.getPatients().asLiveData()
 
-    private val _sendPatientRequest = MutableLiveData<Resource<Nothing?>>()
+    private val _sendPatientRequest = SingleLiveEvent<Resource<Nothing?>>()
     val sendPatientRequest: LiveData<Resource<Nothing?>> = _sendPatientRequest
 
     fun sendPatientsToServer(): Boolean {
