@@ -42,7 +42,7 @@ class PatientsViewModel @Inject constructor(
                     patient.lesions.first()
                 )
             }.onSuccess {
-                deletePatient(patient)
+                patientsDAO.delete(patient)
             }.onFailure {
                 _sendPatientRequest.value = Resource.Failure(it)
                 return@launch
@@ -51,20 +51,7 @@ class PatientsViewModel @Inject constructor(
         _sendPatientRequest.value = Resource.Success(null)
     }
 
-    private suspend fun deletePatient(patient: PatientDTO) {
-        patient.lesions.forEach {
-            it.images.forEach { lesionImageDTO ->
-                val path = lesionImageDTO.image
-                val fileToDelete = File(path)
-                if (fileToDelete.delete()) {
-                    Log.i("DeletePatient", "File deleted: $path")
-                } else {
-                    Log.i("DeletePatient", "Couldn't delete file: $path")
-                }
-                patientsDAO.delete(lesionImageDTO)
-            }
-            patientsDAO.delete(it.lessionData)
-        }
-        patientsDAO.delete(patient.patientData)
+    fun launchDeletePatient(patient: PatientDTO) = viewModelScope.launch {
+        patientsDAO.delete(patient)
     }
 }

@@ -13,7 +13,7 @@
     <string name="home_dialog_server_ip_hint">IP. Exemplo: 192.168.0.150</string>
     <string name="home_dialog_server_port_hint">Porta. Exemplo: 8080</string>
 
-    <string name="surgery_home_body_button">Adicionar lesão</string>
+    <string name="dialog_delete_patient_confirmation">Deseja excluir o paciente com o número do SUS: %s</string>
 
     <string name="dermatology_home_patient_add_button">Novo paciente</string>
     <string name="dermatology_home_patient_list_button">Lista de pacientes</string>
@@ -49,6 +49,8 @@
 
     <string name="dermatology_patient_details_header">Paciente</string>
 
+    <string name="surgery_home_body_button">Adicionar lesão</string>
+
     <string name="surgery_search_patient_header">Buscar Paciente</string>
 
     <string name="surgery_patient_details_name_prefix">Nome:</string>
@@ -81,6 +83,7 @@
     <string name="word_sim">Sim</string>
     <string name="word_nao">Não</string>
     <string name="word_confirm">Confirmar</string>
+    <string name="word_cancel">Cancelar</string>
     <string name="word_continue">Continuar</string>
     <string name="word_next">Próximo</string>
     <string name="word_camera">Câmera</string>

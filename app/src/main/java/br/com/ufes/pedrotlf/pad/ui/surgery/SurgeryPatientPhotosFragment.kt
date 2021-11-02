@@ -152,7 +152,7 @@ class SurgeryPatientPhotosFragment: BaseFragment() {
                         if(file.delete())
                             Toast.makeText(ctx, "Arquivo de imagem cancelado", Toast.LENGTH_SHORT).show()
                         else
-                            Toast.makeText(ctx, "Não foi possível deletar o arquivo", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(ctx, "Não foi possível excluir o arquivo", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
