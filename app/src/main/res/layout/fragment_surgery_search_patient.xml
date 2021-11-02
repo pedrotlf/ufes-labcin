@@ -44,13 +44,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/spacingMargin"
                 android:layout_marginTop="20dp"
-                android:autofillHints="none"
                 android:gravity="start"
                 android:hint="@string/dermatology_new_patient_data_sus_number"
                 android:inputType="number"
-                android:maxLength="15"
+                android:digits="0123456789-"
                 android:singleLine="true"
-                android:textColor="@color/color_primary" />
+                android:textColor="@color/color_primary"
+                android:importantForAutofill="no" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/fragment_surgery_search_patient_button"

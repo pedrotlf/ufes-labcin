@@ -15,6 +15,7 @@ import br.com.ufes.pedrotlf.pad.data.Resource
 import br.com.ufes.pedrotlf.pad.data.dto.SurgeryPatientDTO
 import br.com.ufes.pedrotlf.pad.databinding.FragmentDialogSurgeryPatientDetailsBinding
 import br.com.ufes.pedrotlf.pad.databinding.FragmentSurgerySearchPatientBinding
+import com.redmadrobot.inputmask.MaskedTextChangedListener
 
 class SurgerySearchPatientFragment: BaseFragment() {
 
@@ -36,6 +37,8 @@ class SurgerySearchPatientFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
+            applyMask()
+
             fragmentSurgerySearchPatientButton.setOnClickListener {
                 val susNumber = fragmentSurgerySearchPatientSusNumber.text.toString()
                 if (susNumber.isNotBlank()) searchViewModel.apply {
@@ -45,8 +48,16 @@ class SurgerySearchPatientFragment: BaseFragment() {
             }
         }
 
-        searchViewModel.patientRequest.observe(viewLifecycleOwner){
-            when(it){
+        observeSearchRequest()
+    }
+
+    private fun FragmentSurgerySearchPatientBinding.applyMask(){
+        MaskedTextChangedListener.Companion.installOn(fragmentSurgerySearchPatientSusNumber, "[000]-[0000]-[0000]-[0000]")
+    }
+
+    private fun observeSearchRequest() {
+        searchViewModel.patientRequest.observe(viewLifecycleOwner) {
+            when (it) {
                 is Resource.Loading -> showLoading()
                 is Resource.Success -> {
                     dismissLoading()
@@ -54,7 +65,8 @@ class SurgerySearchPatientFragment: BaseFragment() {
                 }
                 is Resource.Failure -> {
                     dismissLoading()
-                    Toast.makeText(context, "O paciente não foi encontrado", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "O paciente não foi encontrado", Toast.LENGTH_LONG)
+                        .show()
                 }
             }
         }

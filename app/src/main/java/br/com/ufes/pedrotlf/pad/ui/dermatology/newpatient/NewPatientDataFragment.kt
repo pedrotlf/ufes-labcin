@@ -10,6 +10,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import br.com.ufes.pedrotlf.pad.BaseFragment
 import br.com.ufes.pedrotlf.pad.databinding.FragmentDermatologyNewPatientDataBinding
+import br.com.ufes.pedrotlf.pad.databinding.FragmentSurgerySearchPatientBinding
+import com.redmadrobot.inputmask.MaskedTextChangedListener
 
 class NewPatientDataFragment: BaseFragment() {
 
@@ -42,9 +44,15 @@ class NewPatientDataFragment: BaseFragment() {
         }
 
         binding.apply {
-            fragmentDermatologyNewPatientDataSusNumber.doOnTextChanged { text, _, _, _ ->
-                newPatientViewModel.susNumber.value = text?.toString()
-            }
+            MaskedTextChangedListener.Companion.installOn(
+                fragmentDermatologyNewPatientDataSusNumber,
+                "[000]-[0000]-[0000]-[0000]",
+                object: MaskedTextChangedListener.ValueListener{
+                    override fun onTextChanged(maskFilled: Boolean, extractedValue: String, formattedValue: String) {
+                        newPatientViewModel.susNumber.value = formattedValue
+                    }
+                }
+            )
             fragmentDermatologyNewPatientDataAge.doOnTextChanged { text, _, _, _ ->
                 newPatientViewModel.age.value = text?.toString()?.toIntOrNull()
             }
