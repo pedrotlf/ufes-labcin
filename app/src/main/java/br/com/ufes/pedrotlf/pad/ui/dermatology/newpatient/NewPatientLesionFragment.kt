@@ -11,8 +11,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
-import br.com.ufes.pedrotlf.pad.BaseFragment
-import br.com.ufes.pedrotlf.pad.R
+import br.com.ufes.pedrotlf.pad.*
 import br.com.ufes.pedrotlf.pad.databinding.FragmentDermatologyNewPatientLesionBinding
 
 class NewPatientLesionFragment : BaseFragment() {
@@ -35,14 +34,25 @@ class NewPatientLesionFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply { newPatientViewModel.apply {
-            fragmentDermatologyNewPatientWoundBodyRegion.doOnTextChanged { text, _, _, _ ->
-                bodyRegion.value = text?.toString()
+            val regionList = requireContext().getRegionList()
+            val diagnosisList = requireContext().getDiagnosisList()
+            fragmentDermatologyNewPatientWoundBodyRegion.apply {
+                doOnTextChanged { text, _, _, _ ->
+                    bodyRegion.value = text?.toString()
+                }
+                setAutoCompleteOptions(requireContext(), regionList)
             }
-            fragmentDermatologyNewPatientWoundDiagnostic.doOnTextChanged { text, _, _, _ ->
-                diagnostic.value = text?.toString()
+            fragmentDermatologyNewPatientWoundDiagnostic.apply {
+                doOnTextChanged { text, _, _, _ ->
+                    diagnostic.value = text?.toString()
+                }
+                setAutoCompleteOptions(requireContext(), diagnosisList)
             }
-            fragmentDermatologyNewPatientWoundDiagnosticSecondary.doOnTextChanged { text, _, _, _ ->
-                diagnosticSecondary.value = text?.toString()
+            fragmentDermatologyNewPatientWoundDiagnosticSecondary.apply {
+                doOnTextChanged { text, _, _, _ ->
+                    diagnosticSecondary.value = text?.toString()
+                }
+                setAutoCompleteOptions(requireContext(), diagnosisList)
             }
             fragmentDermatologyNewPatientWoundRadioGrown.setBooleanRadioGroupListener(woundGrown)
             fragmentDermatologyNewPatientWoundRadioItched.setBooleanRadioGroupListener(woundItched)

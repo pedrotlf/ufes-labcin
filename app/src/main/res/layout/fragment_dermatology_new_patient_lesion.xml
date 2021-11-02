@@ -43,11 +43,12 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/fragment_dermatology_new_patient_wound_footer">
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/fragment_dermatology_new_patient_wound_body_region"
                     style="@style/EditTextStyle"
                     android:gravity="start"
-                    android:inputType="textAutoComplete"
+                    android:inputType="textCapSentences|textNoSuggestions"
+                    android:completionThreshold="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -57,14 +58,14 @@
                     android:textColor="@color/color_primary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView"
-                    android:autofillHints="none" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView"/>
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/fragment_dermatology_new_patient_wound_diagnostic"
                     style="@style/EditTextStyle"
                     android:gravity="start"
-                    android:inputType="textAutoComplete"
+                    android:inputType="textCapSentences|textNoSuggestions"
+                    android:completionThreshold="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -74,14 +75,14 @@
                     android:textColor="@color/color_primary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView"
-                    android:autofillHints="none" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView"/>
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/fragment_dermatology_new_patient_wound_diagnostic_secondary"
                     style="@style/EditTextStyle"
                     android:gravity="start"
-                    android:inputType="textAutoComplete"
+                    android:inputType="textCapSentences|textNoSuggestions"
+                    android:completionThreshold="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -91,8 +92,7 @@
                     android:textColor="@color/color_primary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView"
-                    android:autofillHints="none" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView"/>
 
                 <TextView
                     android:layout_width="match_parent"

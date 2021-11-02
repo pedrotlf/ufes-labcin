@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import br.com.ufes.pedrotlf.pad.BaseFragment
+import br.com.ufes.pedrotlf.pad.*
 import br.com.ufes.pedrotlf.pad.data.dto.SurgeryPatientLesionDTO
 import br.com.ufes.pedrotlf.pad.databinding.FragmentSurgeryPatientDetailsBinding
 
@@ -31,6 +31,15 @@ class SurgeryPatientDetailsFragment: BaseFragment() {
 
         binding.apply {
             fragmentSurgeryPatientDetailsName.text = args.surgeryPatient.name
+
+            val regionList = requireContext().getRegionList()
+            val diagnosisList = requireContext().getDiagnosisList()
+            val procedureList = requireContext().getProceduresList()
+
+            fragmentSurgeryPatientDetailsRegion.setAutoCompleteOptions(requireContext(), regionList)
+            fragmentSurgeryPatientDetailsDiagnosis.setAutoCompleteOptions(requireContext(), diagnosisList)
+            fragmentSurgeryPatientDetailsDiagnosisSecondary.setAutoCompleteOptions(requireContext(), diagnosisList)
+            fragmentSurgeryPatientDetailsProcedure.setAutoCompleteOptions(requireContext(), procedureList)
 
             fragmentSurgeryPatientDetailsFooterNextButton.setOnClickListener {
                 val patientLesion = SurgeryPatientLesionDTO(

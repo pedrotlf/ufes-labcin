@@ -79,11 +79,12 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView"
                     android:autofillHints="none" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/fragment_dermatology_new_patient_data_service_city"
                     style="@style/EditTextStyle"
                     android:gravity="start"
-                    android:inputType="textAutoComplete"
+                    android:inputType="textCapSentences|textNoSuggestions"
+                    android:completionThreshold="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -93,14 +94,14 @@
                     android:textColor="@color/color_primary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView"
-                    android:autofillHints="none" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/fragment_dermatology_new_patient_data_living_city"
                     style="@style/EditTextStyle"
                     android:gravity="start"
-                    android:inputType="textAutoComplete"
+                    android:inputType="textCapSentences|textNoSuggestions"
+                    android:completionThreshold="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -110,8 +111,7 @@
                     android:textColor="@color/color_primary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView"
-                    android:autofillHints="none" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView"/>
 
             </LinearLayout>
 

@@ -1,5 +1,10 @@
 package br.com.ufes.pedrotlf.pad
 
+import android.content.Context
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.ObjectMapper
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -21,3 +26,27 @@ fun List<String>.generateMultipartList(paramName: String): List<MultipartBody.Pa
 
     return multipartList
 }
+
+fun <T> deserializeFromJson(jsonString: String): T {
+    val mapper = ObjectMapper()
+    return mapper.readValue(jsonString, object: TypeReference<T>(){})
+}
+
+fun Context.loadJSONFromAssets(path: String): String = assets.open(path).use {
+    it.readBytes().toString(Charsets.UTF_8)
+}
+
+fun AutoCompleteTextView.setAutoCompleteOptions(context: Context, content: List<String>){
+    setAdapter(
+        ArrayAdapter(
+            context,
+            android.R.layout.simple_dropdown_item_1line,
+            content
+        )
+    )
+}
+
+fun Context.getDiagnosisList() = deserializeFromJson<List<String>>(loadJSONFromAssets("listaAutoCompDiag.json"))
+fun Context.getCitiesList() = deserializeFromJson<List<String>>(loadJSONFromAssets("listaAutoCompMunicipios.json"))
+fun Context.getProceduresList() = deserializeFromJson<List<String>>(loadJSONFromAssets("listaAutoCompProc.json"))
+fun Context.getRegionList() = deserializeFromJson<List<String>>(loadJSONFromAssets("listaAutoCompRegiao.json"))
