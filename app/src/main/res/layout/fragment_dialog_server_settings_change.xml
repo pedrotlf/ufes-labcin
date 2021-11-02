@@ -11,6 +11,7 @@
         style="@style/EditTextStyle"
         android:inputType="number"
         android:digits="0123456789."
+        android:maxLength="15"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/home_dialog_server_ip_hint" />
