@@ -42,6 +42,9 @@ interface SadeApi {
         @Query("cirurgiao") surgeon: String, @Part images: List<MultipartBody.Part>,
     ): ResponseBody
 
+    @GET("sade/api-smartphone/cirurgioes")
+    suspend fun getSurgeons(@Query("token") token: String): List<String>
+
     @GET
     suspend fun testConnection(@Url url: String): ResponseBody
 }

@@ -1,6 +1,9 @@
 package br.com.ufes.pedrotlf.pad
 
 import android.content.Context
+import android.view.MotionEvent
+import android.view.View.OnFocusChangeListener
+import android.view.View.OnTouchListener
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import com.fasterxml.jackson.core.type.TypeReference
@@ -9,6 +12,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+
 
 /**
  * ATTENTION! [this] MUST BE A LIST OF FILE PATHS
@@ -44,6 +48,13 @@ fun AutoCompleteTextView.setAutoCompleteOptions(context: Context, content: List<
             content
         )
     )
+    onFocusChangeListener = OnFocusChangeListener { _, hasFocus -> if (hasFocus) showDropDown() }
+
+    setOnTouchListener { _, event ->
+        if(event.action == MotionEvent.ACTION_DOWN) showDropDown()
+        performClick()
+        onTouchEvent(event)
+    }
 }
 
 fun Context.getDiagnosisList() = deserializeFromJson<List<String>>(loadJSONFromAssets("listaAutoCompDiag.json"))

@@ -43,6 +43,10 @@ class SadeRepository constructor(private val sadeApi: SadeApi) {
         )
     }
 
+    suspend fun getSurgeons(): List<String>{
+        return sadeApi.getSurgeons(BuildConfig.REPO_API_TOKEN)
+    }
+
     suspend fun testConnection(baseUrl: String): ResponseBody{
         return sadeApi.testConnection(baseUrl + SadeApi.TEST_CONNECTION_URL)
     }

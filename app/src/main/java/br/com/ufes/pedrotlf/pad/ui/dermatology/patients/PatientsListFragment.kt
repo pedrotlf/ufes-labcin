@@ -76,8 +76,7 @@ class PatientsListFragment: BaseFragment() {
             }.setOnCancelListener {
                 val position = adapter.currentList.indexOf(patient)
                 if(position >= 0) adapter.notifyItemChanged(position)
-            }
-            .create()
+            }.create()
             .show()
     }
 }

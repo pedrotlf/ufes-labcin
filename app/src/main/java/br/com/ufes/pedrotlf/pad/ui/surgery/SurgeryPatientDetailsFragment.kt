@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.ufes.pedrotlf.pad.*
+import br.com.ufes.pedrotlf.pad.data.Resource
 import br.com.ufes.pedrotlf.pad.data.dto.SurgeryPatientLesionDTO
 import br.com.ufes.pedrotlf.pad.databinding.FragmentSurgeryPatientDetailsBinding
 
@@ -14,6 +16,7 @@ class SurgeryPatientDetailsFragment: BaseFragment() {
 
     private var _binding: FragmentSurgeryPatientDetailsBinding? = null
     private val binding get() = _binding!!
+    private val viewModel by viewModels<SurgeryPatientDetailsViewModel>()
     private val args by navArgs<SurgeryPatientDetailsFragmentArgs>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -59,6 +62,17 @@ class SurgeryPatientDetailsFragment: BaseFragment() {
                     args.susNumber
                 )
                 findNavController().navigate(action)
+            }
+
+            viewModel.surgeonsRequest.observe(viewLifecycleOwner){
+                when(it){
+                    is Resource.Loading -> showLoading()
+                    is Resource.Success -> {
+                        dismissLoading()
+                        fragmentSurgeryPatientDetailsSurgeon.setAutoCompleteOptions(requireContext(), it.data)
+                    }
+                    is Resource.Failure -> dismissLoading()
+                }
             }
         }
     }

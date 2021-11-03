@@ -167,11 +167,12 @@
                     android:textColor="@color/color_primary"
                     android:autofillHints="none" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/fragment_surgery_patient_details_surgeon"
                     style="@style/EditTextStyle"
                     android:gravity="start"
-                    android:inputType="textAutoComplete"
+                    android:inputType="textCapSentences|textNoSuggestions"
+                    android:completionThreshold="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
