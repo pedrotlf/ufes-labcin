@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import br.com.ufes.pedrotlf.pad.BaseFragment
@@ -55,22 +56,40 @@ class PadHomeFragment: BaseFragment() {
                 homeViewModel.testConnection()
             }
 
-            homeViewModel.connectionStatus.observe(viewLifecycleOwner){
-                when(it){
-                    is Resource.Loading -> showLoading()
-                    is Resource.Success -> {
-                        dismissLoading()
-                        fragmentHomeServerConnectionStatus.text = getString(R.string.home_footer_server_connection_status_ok)
-                        context?.let { ctx ->
-                            fragmentHomeServerConnectionStatus.setTextColor(ContextCompat.getColor(ctx, R.color.green_dark))
-                        }
+            observeConnectionStatus()
+        }
+    }
+
+    private fun FragmentPadHomeBinding.observeConnectionStatus() {
+        homeViewModel.connectionStatus.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Loading -> {
+                    fragmentHomeServerConnectionStatusLoadingLayout.isVisible = true
+                    fragmentHomeServerConnectionStatusLoadingBar.show()
+                    fragmentHomeServerConnectionStatus.isVisible = false
+                }
+                is Resource.Success -> {
+                    fragmentHomeServerConnectionStatusLoadingLayout.isVisible = false
+                    fragmentHomeServerConnectionStatusLoadingBar.hide()
+                    fragmentHomeServerConnectionStatus.isVisible = true
+                    fragmentHomeServerConnectionStatus.text =
+                        getString(R.string.home_footer_server_connection_status_ok)
+                    context?.let { ctx ->
+                        fragmentHomeServerConnectionStatus.setTextColor(
+                            ContextCompat.getColor(ctx, R.color.green_dark)
+                        )
                     }
-                    is Resource.Failure -> {
-                        dismissLoading()
-                        fragmentHomeServerConnectionStatus.text = getString(R.string.home_footer_server_connection_status_failed)
-                        context?.let { ctx ->
-                            fragmentHomeServerConnectionStatus.setTextColor(ContextCompat.getColor(ctx, R.color.red_dark))
-                        }
+                }
+                is Resource.Failure -> {
+                    fragmentHomeServerConnectionStatusLoadingLayout.isVisible = false
+                    fragmentHomeServerConnectionStatusLoadingBar.hide()
+                    fragmentHomeServerConnectionStatus.isVisible = true
+                    fragmentHomeServerConnectionStatus.text =
+                        getString(R.string.home_footer_server_connection_status_failed)
+                    context?.let { ctx ->
+                        fragmentHomeServerConnectionStatus.setTextColor(
+                            ContextCompat.getColor(ctx, R.color.red_dark)
+                        )
                     }
                 }
             }

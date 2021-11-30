@@ -18,7 +18,7 @@ import java.io.File
  * ATTENTION! [this] MUST BE A LIST OF FILE PATHS
  *
  * Returns a list of [MultipartBody.Part] using [paramName] as its name. Usually used to send an
- * array of files using the same parameter name.
+ * array of files in a request, using the same parameter name.
  */
 fun List<String>.generateMultipartList(paramName: String): List<MultipartBody.Part>{
     val multipartList = mutableListOf<MultipartBody.Part>()

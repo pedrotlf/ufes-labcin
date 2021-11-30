@@ -208,6 +208,21 @@
                 android:textStyle="bold"
                 android:textColor="@color/red_dark"
                 tools:text="@string/home_footer_server_connection_status_failed"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/fragment_home_server_connection_status_loading_layout"
+                android:layout_marginStart="@dimen/spacingMargin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible">
+                <androidx.core.widget.ContentLoadingProgressBar
+                    android:id="@+id/fragment_home_server_connection_status_loading_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintDimensionRatio="1"
+                    android:theme="?android:attr/progressBarStyleSmall"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
