@@ -12,6 +12,7 @@ import br.com.ufes.pedrotlf.pad.BaseFragment
 import br.com.ufes.pedrotlf.pad.databinding.FragmentDermatologyPatientDetailsBinding
 import br.com.ufes.pedrotlf.pad.getCitiesList
 import br.com.ufes.pedrotlf.pad.setAutoCompleteOptions
+import com.google.android.material.tabs.TabLayoutMediator
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 
 class PatientDetailsFragment: BaseFragment() {
@@ -19,6 +20,11 @@ class PatientDetailsFragment: BaseFragment() {
     private var _binding: FragmentDermatologyPatientDetailsBinding? = null
     private val binding get() = _binding!!
     private val patientViewModel: PatientDetailsViewModel by viewModels()
+    private val adapter by lazy {
+        patientViewModel.patient?.let{ patient ->
+            PatientLesionsAdapter(this, patient.patientData.id, patient.lesions)
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentDermatologyPatientDetailsBinding.inflate(inflater, container, false)
@@ -35,16 +41,18 @@ class PatientDetailsFragment: BaseFragment() {
 
         binding.apply {
             setPatientInfos()
-
-            patientViewModel.patient?.lesions?.let {
-                fragmentDermatologyPatientDetailsLesionsList.adapter = PatientLesionsAdapter(
-                    this@PatientDetailsFragment,
-                    it
-                )
-            } ?: kotlin.run { fragmentDermatologyPatientDetailsLesionsList.isVisible = false }
+            setLesionList()
 
             fragmentDermatologyPatientDetailsUpdate.setOnClickListener {
                 patientViewModel.updatePatient()
+            }
+
+            fragmentDermatologyPatientDetailsAddLesion.setOnClickListener {
+                adapter?.addEmptyLesion()
+                fragmentDermatologyPatientDetailsLesionsList.post {
+                    val current = fragmentDermatologyPatientDetailsLesionsList.currentItem
+                    fragmentDermatologyPatientDetailsLesionsList.currentItem = current + 1
+                }
             }
 
             patientViewModel.patientUpdated.observe(viewLifecycleOwner){
@@ -53,6 +61,18 @@ class PatientDetailsFragment: BaseFragment() {
                 }
             }
         }
+    }
+
+    private fun FragmentDermatologyPatientDetailsBinding.setLesionList() {
+        patientViewModel.patient?.lesions?.let {
+            fragmentDermatologyPatientDetailsLesionsList.adapter = adapter
+            TabLayoutMediator(
+                fragmentDermatologyPatientDetailsLesionsTab,
+                fragmentDermatologyPatientDetailsLesionsList
+            ) { tab, position ->
+                tab.text = (position + 1).toString()
+            }.attach()
+        } ?: kotlin.run { fragmentDermatologyPatientDetailsLesionsList.isVisible = false }
     }
 
     private fun FragmentDermatologyPatientDetailsBinding.setPatientInfos(){

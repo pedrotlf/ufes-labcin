@@ -4,9 +4,19 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import br.com.ufes.pedrotlf.pad.data.dto.LesionDTO
 
-class PatientLesionsAdapter(f: Fragment, private val lesionsList: List<LesionDTO>): FragmentStateAdapter(f) {
+class PatientLesionsAdapter(
+    f: Fragment,
+    private val patientId: Int,
+    lesions: List<LesionDTO?>
+): FragmentStateAdapter(f) {
+    private val list = lesions.toMutableList()
 
-    override fun getItemCount(): Int = lesionsList.size
+    override fun getItemCount(): Int = list.size
 
-    override fun createFragment(position: Int): Fragment = PatientLesionPageFragment(lesionsList[position])
+    override fun createFragment(position: Int): Fragment = PatientLesionPageFragment(patientId, list[position])
+
+    fun addEmptyLesion(){
+        list.add(null)
+        notifyDataSetChanged()
+    }
 }

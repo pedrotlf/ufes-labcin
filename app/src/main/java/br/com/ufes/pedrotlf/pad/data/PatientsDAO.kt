@@ -34,23 +34,28 @@ abstract class PatientsDAO {
     @Delete
     abstract suspend fun delete(lesion: LesionDataDTO)
     @Delete
-    abstract suspend fun delete(lesion: LesionImageDTO)
+    abstract suspend fun unsafeDelete(lesion: LesionImageDTO)
 
     @Transaction
     open suspend fun delete(patient: PatientDTO) {
         patient.lesions.forEach {
             it.images.forEach { lesionImageDTO ->
-                val path = lesionImageDTO.image
-                val fileToDelete = File(path)
-                if (fileToDelete.delete()) {
-                    Log.i("DeletePatient", "File deleted: $path")
-                } else {
-                    Log.i("DeletePatient", "Couldn't delete file: $path")
-                }
                 delete(lesionImageDTO)
             }
             delete(it.lessionData)
         }
         delete(patient.patientData)
+    }
+
+    @Transaction
+    open suspend fun delete(lesion: LesionImageDTO) {
+        val path = lesion.image
+        val fileToDelete = File(path)
+        if (fileToDelete.delete()) {
+            Log.i("DeletePatient", "File deleted: $path")
+        } else {
+            Log.i("DeletePatient", "Couldn't delete file: $path")
+        }
+        unsafeDelete(lesion)
     }
 }

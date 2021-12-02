@@ -114,7 +114,8 @@
                         android:id="@+id/fragment_dermatology_patient_details_update"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/spacingMargin"
+                        android:layout_marginHorizontal="@dimen/spacingMargin"
+                        android:layout_marginTop="10dp"
                         android:text="@string/dermatology_patient_details_update_patient_info"
                         android:textColor="@color/white"
                         android:textSize="14sp"
@@ -123,10 +124,41 @@
                         app:icon="@drawable/outline_save_alt_24"
                         app:iconTint="@color/white"
                         app:iconGravity="end"/>
-                </LinearLayout>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/spacingMargin"
+                        android:layout_marginTop="30dp"
+                        android:text="@string/dermatology_patient_details_lesion_title"
+                        android:textSize="24sp"
+                        android:textColor="@color/teal_steel"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/fragment_dermatology_patient_details_add_lesion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/spacingMargin"
+                        android:text="@string/dermatology_patient_details_lesion_add"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:letterSpacing="0"
+                        android:paddingHorizontal="10dp"
+                        app:icon="@android:drawable/ic_input_add"
+                        app:iconTint="@color/white"
+                        app:iconGravity="end"/>
+                </LinearLayout>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/fragment_dermatology_patient_details_lesions_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/spacingMargin"
+                android:background="@null"
+                android:clipToPadding="false"
+                app:tabGravity="start"
+                app:tabMode="scrollable" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.viewpager2.widget.ViewPager2
