@@ -23,11 +23,11 @@ abstract class PatientsDAO {
     abstract suspend fun insert(lesion: LesionImageDTO): Long
 
     @Update
-    abstract suspend fun update(patient: PatientDataDTO)
+    abstract suspend fun update(patient: PatientDataDTO): Int
     @Update
-    abstract suspend fun update(lesion: LesionDataDTO)
+    abstract suspend fun update(lesion: LesionDataDTO): Int
     @Update
-    abstract suspend fun update(lesion: LesionImageDTO)
+    abstract suspend fun update(lesion: LesionImageDTO): Int
 
     @Delete
     abstract suspend fun delete(patient: PatientDataDTO)

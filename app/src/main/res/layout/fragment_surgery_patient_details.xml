@@ -66,18 +66,13 @@
 
                 <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/fragment_surgery_patient_details_region"
-                    style="@style/EditTextStyle"
-                    android:gravity="start"
+                    style="@style/EditTextSingleLineAutoCompleteStyle"
                     android:inputType="textCapSentences|textNoSuggestions"
-                    android:completionThreshold="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginHorizontal="@dimen/spacingMargin"
-                    android:singleLine="true"
-                    android:hint="@string/surgery_patient_details_region_hint"
-                    android:textColor="@color/color_primary"
-                    android:autofillHints="none" />
+                    android:hint="@string/surgery_patient_details_region_hint" />
 
                 <EditText
                     android:id="@+id/fragment_surgery_patient_details_higher_diameter"
@@ -111,47 +106,33 @@
 
                 <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/fragment_surgery_patient_details_diagnosis"
-                    style="@style/EditTextStyle"
-                    android:gravity="start"
+                    style="@style/EditTextSingleLineAutoCompleteStyle"
                     android:inputType="textCapSentences|textNoSuggestions"
-                    android:completionThreshold="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginHorizontal="@dimen/spacingMargin"
-                    android:singleLine="true"
-                    android:hint="@string/surgery_patient_details_diagnosis_hint"
-                    android:textColor="@color/color_primary"
-                    android:autofillHints="none" />
+                    android:hint="@string/surgery_patient_details_diagnosis_hint" />
 
                 <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/fragment_surgery_patient_details_diagnosis_secondary"
-                    style="@style/EditTextStyle"
-                    android:gravity="start"
+                    style="@style/EditTextSingleLineAutoCompleteStyle"
                     android:inputType="textCapSentences|textNoSuggestions"
-                    android:completionThreshold="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginHorizontal="@dimen/spacingMargin"
-                    android:singleLine="true"
-                    android:hint="@string/surgery_patient_details_diagnosis_secondary_hint"
-                    android:textColor="@color/color_primary"
-                    android:autofillHints="none" />
+                    android:hint="@string/surgery_patient_details_diagnosis_secondary_hint" />
 
                 <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/fragment_surgery_patient_details_procedure"
-                    style="@style/EditTextStyle"
-                    android:gravity="start"
+                    style="@style/EditTextSingleLineAutoCompleteStyle"
                     android:inputType="textCapSentences|textNoSuggestions"
-                    android:completionThreshold="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginHorizontal="@dimen/spacingMargin"
-                    android:singleLine="true"
                     android:hint="@string/surgery_patient_details_procedure_hint"
-                    android:textColor="@color/color_primary"
                     android:autofillHints="none" />
 
                 <EditText
@@ -169,18 +150,13 @@
 
                 <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                     android:id="@+id/fragment_surgery_patient_details_surgeon"
-                    style="@style/EditTextStyle"
-                    android:gravity="start"
+                    style="@style/EditTextSingleLineAutoCompleteStyle"
                     android:inputType="textCapSentences|textNoSuggestions"
-                    android:completionThreshold="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginHorizontal="@dimen/spacingMargin"
-                    android:singleLine="true"
-                    android:hint="@string/surgery_patient_details_surgeon_hint"
-                    android:textColor="@color/color_primary"
-                    android:autofillHints="none" />
+                    android:hint="@string/surgery_patient_details_surgeon_hint" />
             </LinearLayout>
 
             <LinearLayout

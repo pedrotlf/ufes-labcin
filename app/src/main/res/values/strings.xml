@@ -48,6 +48,8 @@
     <string name="dermatology_patients_item_sus_starting_text">SUS:</string>
 
     <string name="dermatology_patient_details_header">Paciente</string>
+    <string name="dermatology_patient_details_update_patient_info">Atualizar dados do paciente</string>
+
 
     <string name="surgery_home_body_button">Adicionar lesão</string>
 

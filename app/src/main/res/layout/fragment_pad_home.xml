@@ -214,7 +214,7 @@
                 android:layout_marginStart="@dimen/spacingMargin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="visible">
+                android:visibility="gone">
                 <androidx.core.widget.ContentLoadingProgressBar
                     android:id="@+id/fragment_home_server_connection_status_loading_bar"
                     android:layout_width="0dp"

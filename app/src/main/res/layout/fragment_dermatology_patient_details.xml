@@ -24,23 +24,118 @@
             android:text="@string/dermatology_patient_details_header"/>
     </LinearLayout>
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/fragment_dermatology_patient_details_lesion_photos_list"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/fragment_dermatology_patient_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_dermatology_patient_details_header">
 
-        <androidx.constraintlayout.helper.widget.Flow
-            android:id="@+id/fragment_dermatology_patient_details_lesion_photos_list_flow"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/fragment_dermatology_patient_details_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/spacingMargin"
-            app:flow_horizontalStyle="spread"
-            app:flow_wrapMode="aligned"
-            app:flow_verticalGap="5dp"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:background="@null"
+            android:orientation="vertical">
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/fragment_dermatology_patient_details_collapsing_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingVertical="20dp">
+
+                    <EditText
+                        android:id="@+id/fragment_dermatology_patient_details_sus_number"
+                        style="@style/EditTextStyle"
+                        android:gravity="start"
+                        android:inputType="number"
+                        android:digits="0123456789-"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/spacingMargin"
+                        android:singleLine="true"
+                        android:hint="@string/dermatology_new_patient_data_sus_number"
+                        android:textColor="@color/color_primary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView"
+                        android:autofillHints="none" />
+
+                    <EditText
+                        android:id="@+id/fragment_dermatology_patient_details_age"
+                        style="@style/EditTextStyle"
+                        android:gravity="start"
+                        android:inputType="number"
+                        android:maxLength="3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginHorizontal="@dimen/spacingMargin"
+                        android:singleLine="true"
+                        android:hint="@string/dermatology_new_patient_data_age"
+                        android:textColor="@color/color_primary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView"
+                        android:autofillHints="none" />
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/fragment_dermatology_patient_details_service_city"
+                        style="@style/EditTextSingleLineAutoCompleteStyle"
+                        android:inputType="textCapSentences|textNoSuggestions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginHorizontal="@dimen/spacingMargin"
+                        android:hint="@string/dermatology_new_patient_data_service_city"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/fragment_dermatology_patient_details_living_city"
+                        style="@style/EditTextSingleLineAutoCompleteStyle"
+                        android:inputType="textCapSentences|textNoSuggestions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginHorizontal="@dimen/spacingMargin"
+                        android:hint="@string/dermatology_new_patient_data_living_city"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/fragment_dermatology_patient_details_update"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacingMargin"
+                        android:text="@string/dermatology_patient_details_update_patient_info"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:letterSpacing="0"
+                        android:padding="16dp"
+                        app:icon="@drawable/outline_save_alt_24"
+                        app:iconTint="@color/white"
+                        app:iconGravity="end"/>
+                </LinearLayout>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/fragment_dermatology_patient_details_lesions_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

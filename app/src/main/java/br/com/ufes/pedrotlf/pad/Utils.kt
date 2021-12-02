@@ -3,7 +3,6 @@ package br.com.ufes.pedrotlf.pad
 import android.content.Context
 import android.view.MotionEvent
 import android.view.View.OnFocusChangeListener
-import android.view.View.OnTouchListener
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import com.fasterxml.jackson.core.type.TypeReference
@@ -40,7 +39,7 @@ fun Context.loadJSONFromAssets(path: String): String = assets.open(path).use {
     it.readBytes().toString(Charsets.UTF_8)
 }
 
-fun AutoCompleteTextView.setAutoCompleteOptions(context: Context, content: List<String>){
+fun AutoCompleteTextView.setAutoCompleteOptions(content: List<String>){
     setAdapter(
         ArrayAdapter(
             context,
@@ -48,13 +47,16 @@ fun AutoCompleteTextView.setAutoCompleteOptions(context: Context, content: List<
             content
         )
     )
-    onFocusChangeListener = OnFocusChangeListener { _, hasFocus -> if (hasFocus) showDropDown() }
-
-    setOnTouchListener { _, event ->
-        if(event.action == MotionEvent.ACTION_DOWN) showDropDown()
-        performClick()
-        onTouchEvent(event)
+    onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
+        if (hasFocus && text.isEmpty())
+            showDropDown()
     }
+
+//    setOnTouchListener { _, event ->
+//        if(event.action == MotionEvent.ACTION_DOWN) showDropDown()
+//        performClick()
+//        onTouchEvent(event)
+//    }
 }
 
 fun Context.getDiagnosisList() = deserializeFromJson<List<String>>(loadJSONFromAssets("listaAutoCompDiag.json"))

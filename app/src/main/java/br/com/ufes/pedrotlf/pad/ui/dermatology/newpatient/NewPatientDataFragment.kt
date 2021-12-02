@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import br.com.ufes.pedrotlf.pad.*
 import br.com.ufes.pedrotlf.pad.databinding.FragmentDermatologyNewPatientDataBinding
-import br.com.ufes.pedrotlf.pad.databinding.FragmentSurgerySearchPatientBinding
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 
 class NewPatientDataFragment: BaseFragment() {
@@ -58,18 +56,18 @@ class NewPatientDataFragment: BaseFragment() {
                 newPatientViewModel.age.value = text?.toString()?.toIntOrNull()
             }
 
-            val citiesList = requireContext().getCitiesList()
+            val citiesList = root.context.getCitiesList()
             fragmentDermatologyNewPatientDataServiceCity.apply {
                 doOnTextChanged { text, _, _, _ ->
                     newPatientViewModel.serviceCity.value = text?.toString()
                 }
-                setAutoCompleteOptions(requireContext(), citiesList)
+                setAutoCompleteOptions(citiesList)
             }
             fragmentDermatologyNewPatientDataLivingCity.apply {
                 doOnTextChanged { text, _, _, _ ->
                     newPatientViewModel.livingCity.value = text?.toString()
                 }
-                setAutoCompleteOptions(requireContext(), citiesList)
+                setAutoCompleteOptions(citiesList)
             }
 
             fragmentDermatologyNewPatientDataFooterNextButton.setOnClickListener {

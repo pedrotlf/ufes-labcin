@@ -35,14 +35,14 @@ class SurgeryPatientDetailsFragment: BaseFragment() {
         binding.apply {
             fragmentSurgeryPatientDetailsName.text = args.surgeryPatient.name
 
-            val regionList = requireContext().getRegionList()
-            val diagnosisList = requireContext().getDiagnosisList()
-            val procedureList = requireContext().getProceduresList()
+            val regionList = root.context.getRegionList()
+            val diagnosisList = root.context.getDiagnosisList()
+            val procedureList = root.context.getProceduresList()
 
-            fragmentSurgeryPatientDetailsRegion.setAutoCompleteOptions(requireContext(), regionList)
-            fragmentSurgeryPatientDetailsDiagnosis.setAutoCompleteOptions(requireContext(), diagnosisList)
-            fragmentSurgeryPatientDetailsDiagnosisSecondary.setAutoCompleteOptions(requireContext(), diagnosisList)
-            fragmentSurgeryPatientDetailsProcedure.setAutoCompleteOptions(requireContext(), procedureList)
+            fragmentSurgeryPatientDetailsRegion.setAutoCompleteOptions(regionList)
+            fragmentSurgeryPatientDetailsDiagnosis.setAutoCompleteOptions(diagnosisList)
+            fragmentSurgeryPatientDetailsDiagnosisSecondary.setAutoCompleteOptions(diagnosisList)
+            fragmentSurgeryPatientDetailsProcedure.setAutoCompleteOptions(procedureList)
 
             fragmentSurgeryPatientDetailsFooterNextButton.setOnClickListener {
                 val patientLesion = SurgeryPatientLesionDTO(
@@ -69,7 +69,7 @@ class SurgeryPatientDetailsFragment: BaseFragment() {
                     is Resource.Loading -> showLoading()
                     is Resource.Success -> {
                         dismissLoading()
-                        fragmentSurgeryPatientDetailsSurgeon.setAutoCompleteOptions(requireContext(), it.data)
+                        fragmentSurgeryPatientDetailsSurgeon.setAutoCompleteOptions(it.data)
                     }
                     is Resource.Failure -> dismissLoading()
                 }

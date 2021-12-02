@@ -34,25 +34,25 @@ class NewPatientLesionFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply { newPatientViewModel.apply {
-            val regionList = requireContext().getRegionList()
-            val diagnosisList = requireContext().getDiagnosisList()
+            val regionList = root.context.getRegionList()
+            val diagnosisList = root.context.getDiagnosisList()
             fragmentDermatologyNewPatientWoundBodyRegion.apply {
                 doOnTextChanged { text, _, _, _ ->
                     bodyRegion.value = text?.toString()
                 }
-                setAutoCompleteOptions(requireContext(), regionList)
+                setAutoCompleteOptions(regionList)
             }
             fragmentDermatologyNewPatientWoundDiagnostic.apply {
                 doOnTextChanged { text, _, _, _ ->
                     diagnostic.value = text?.toString()
                 }
-                setAutoCompleteOptions(requireContext(), diagnosisList)
+                setAutoCompleteOptions(diagnosisList)
             }
             fragmentDermatologyNewPatientWoundDiagnosticSecondary.apply {
                 doOnTextChanged { text, _, _, _ ->
                     diagnosticSecondary.value = text?.toString()
                 }
-                setAutoCompleteOptions(requireContext(), diagnosisList)
+                setAutoCompleteOptions(diagnosisList)
             }
             fragmentDermatologyNewPatientWoundRadioGrown.setBooleanRadioGroupListener(woundGrown)
             fragmentDermatologyNewPatientWoundRadioItched.setBooleanRadioGroupListener(woundItched)
