@@ -1,6 +1,10 @@
 package br.com.ufes.pedrotlf.pad.ui.dermatology.patients
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +12,9 @@ import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.FileProvider
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -17,6 +23,8 @@ import br.com.ufes.pedrotlf.pad.*
 import br.com.ufes.pedrotlf.pad.data.dto.LesionDTO
 import br.com.ufes.pedrotlf.pad.databinding.FragmentDermatologyPatientLesionPageBinding
 import com.bumptech.glide.Glide
+import java.io.File
+import java.io.IOException
 
 class PatientLesionPageFragment(private val patientId: Int, private val lesion: LesionDTO?): BaseFragment() {
 
@@ -37,30 +45,44 @@ class PatientLesionPageFragment(private val patientId: Int, private val lesion: 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.originalLesion.value = lesion
+        viewModel.currentLesion.value = lesion
 
         binding.apply {
             setLesionFields()
             setPictures()
 
-            viewModel.lesionUpdated.observe(viewLifecycleOwner){
-                if(it != 0){
-                    Toast.makeText(root.context, "Lesão atualizada!", Toast.LENGTH_SHORT).show()
-                }
+            observeLesionChanges()
+            observePicturesChanges()
+        }
+    }
+
+    private fun FragmentDermatologyPatientLesionPageBinding.observeLesionChanges() {
+        viewModel.lesionUpdated.observe(viewLifecycleOwner) {
+            if (it != 0) {
+                Toast.makeText(root.context, "Lesão atualizada!", Toast.LENGTH_SHORT).show()
             }
-            viewModel.lesionCreated.observe(viewLifecycleOwner){
-                viewModel.originalLesion.value = it
-                Toast.makeText(root.context, "Lesão vinculada ao paciente!", Toast.LENGTH_SHORT).show()
-            }
-            viewModel.originalLesion.observe(viewLifecycleOwner){ lesion ->
+        }
+        viewModel.lesionCreated.observe(viewLifecycleOwner) {
+            viewModel.currentLesion.value = it
+            Toast.makeText(root.context, "Lesão vinculada ao paciente!", Toast.LENGTH_SHORT).show()
+        }
+
+        viewModel.currentLesion.observe(viewLifecycleOwner) { lesion ->
+            if (lesion != null) {
                 fragmentDermatologyPatientWoundFooterNextButton.apply {
-                    if (lesion != null) {
-                        text = getString(R.string.dermatology_patient_details_update_lesion_info)
-                        setOnClickListener { viewModel.updateLesion(lesion.lessionData) }
-                    } else {
-                        text = getString(R.string.dermatology_patient_details_attach_lesion)
-                        setOnClickListener { viewModel.attachLesion(patientId) }
-                    }
+                    text = getString(R.string.dermatology_patient_details_update_lesion_info)
+                    setOnClickListener { viewModel.updateLesion(lesion.lessionData) }
+                }
+                fragmentDermatologyPatientDetailsLesionPhotosCamera.setOnClickListener {
+                    it.openCamera()
+                }
+            } else {
+                fragmentDermatologyPatientWoundFooterNextButton.apply {
+                    text = getString(R.string.dermatology_patient_details_attach_lesion)
+                    setOnClickListener { viewModel.attachLesion(patientId) }
+                }
+                fragmentDermatologyPatientDetailsLesionPhotosCamera.setOnClickListener {
+                    Toast.makeText(root.context, "Vincule a lesão ao paciente antes de adicionar imagens!", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -125,24 +147,83 @@ class PatientLesionPageFragment(private val patientId: Int, private val lesion: 
             }
     }
 
-    private fun FragmentDermatologyPatientLesionPageBinding.setPictures() {
-        if(!lesion?.images.isNullOrEmpty()) {
-            lesion?.images?.forEach { img ->
-                context?.let { ctx ->
-                    val imageView = ImageView(ctx)
-                    imageView.layoutParams =
-                        ConstraintLayout.LayoutParams(
-                            ViewGroup.LayoutParams.WRAP_CONTENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT
-                        )
-                    imageView.id = View.generateViewId()
-                    Glide.with(ctx).load(img.image).override(500).into(imageView)
-                    fragmentDermatologyPatientDetailsLesionPhotosList.addView(imageView)
-                    fragmentDermatologyPatientDetailsLesionPhotosListFlow.addView(imageView)
+    private fun FragmentDermatologyPatientLesionPageBinding.observePicturesChanges() {
+        viewModel.imageList.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                fragmentDermatologyPatientDetailsLesionPhotosList.isVisible = true
+                it.forEach { img ->
+                    context?.let { ctx ->
+                        val imageView = ImageView(ctx)
+                        imageView.layoutParams =
+                            ConstraintLayout.LayoutParams(
+                                ViewGroup.LayoutParams.WRAP_CONTENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT
+                            )
+                        imageView.id = View.generateViewId()
+                        Glide.with(ctx).load(img.image).override(500).into(imageView)
+                        fragmentDermatologyPatientDetailsLesionPhotosList.addView(imageView)
+                        fragmentDermatologyPatientDetailsLesionPhotosListFlow.addView(imageView)
+                    }
                 }
+            } else {
+                fragmentDermatologyPatientDetailsLesionPhotosList.isVisible = false
             }
-        }else{
-            fragmentDermatologyPatientDetailsLesionPhotosList.isVisible = false
         }
     }
+
+    private fun FragmentDermatologyPatientLesionPageBinding.setPictures() {
+        lesion?.images?.let { imagesDto ->
+            viewModel.setInitialImagePathList(imagesDto)
+        }
+    }
+
+    private fun View.openCamera(){
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            activity?.packageManager?.let { packageManager ->
+                // Ensure that there's a camera activity to handle the intent
+                takePictureIntent.resolveActivity(packageManager)?.also {
+                    // Create the File where the photo should go
+                    val photoFile: File? = try {
+                        createImageFile{
+                            viewModel.currentImagePath.value = it
+                        }
+                    } catch (ex: IOException) {
+                        // Error occurred while creating the File
+                        Toast.makeText(
+                            context,
+                            "Erro ao tentar gerar um arquivo para a foto",
+                            Toast.LENGTH_SHORT).show()
+                        null
+                    }
+
+                    // Continue only if the File was successfully created
+                    context?.also { ctx -> photoFile?.also { file ->
+                        val photoURI: Uri = FileProvider.getUriForFile(
+                            ctx,
+                            "br.com.ufes.pedrotlf.pad.fileprovider",
+                            file)
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                        cameraActivityLauncher.launch(takePictureIntent)
+                    }}
+                }
+            }
+        }
+    }
+
+    private val cameraActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                viewModel.confirmImagePath()
+            } else {
+                context?.let { ctx ->
+                    viewModel.currentImagePath.value?.also{
+                        val file = File(it)
+                        if(file.delete())
+                            Toast.makeText(ctx, "Arquivo de imagem cancelado", Toast.LENGTH_SHORT).show()
+                        else
+                            Toast.makeText(ctx, "Não foi possível excluir o arquivo", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
 }

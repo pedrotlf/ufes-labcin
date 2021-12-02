@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import br.com.ufes.pedrotlf.pad.data.PatientsDAO
 import br.com.ufes.pedrotlf.pad.data.dto.LesionDTO
 import br.com.ufes.pedrotlf.pad.data.dto.LesionDataDTO
+import br.com.ufes.pedrotlf.pad.data.dto.LesionImageDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,7 +17,7 @@ class PatientLesionPageViewModel @Inject constructor(
     private val patientsDAO: PatientsDAO
 ) : ViewModel() {
 
-    val originalLesion = MutableLiveData<LesionDTO?>()
+    val currentLesion = MutableLiveData<LesionDTO?>()
 
     var bodyRegion = ""
     var diagnostic = ""
@@ -65,5 +66,31 @@ class PatientLesionPageViewModel @Inject constructor(
         val lesionId = patientsDAO.insert(newLesion)
         if(lesionId > 0)
             _lesionCreated.value = LesionDTO(newLesion.copy(id = lesionId.toInt()), emptyList())
+    }
+
+    private fun attachImage(path: String) = viewModelScope.launch{
+        currentLesion.value?.let {
+            val newImage = LesionImageDTO(path, it.lessionData.id)
+            val imageId = patientsDAO.insert(newImage)
+
+            val currentList = _imageList.value?.toMutableList() ?: mutableListOf()
+            currentList.add(newImage.copy(id = imageId.toInt()))
+            _imageList.value = currentList
+        }
+    }
+
+    private val _imageList = MutableLiveData<List<LesionImageDTO>>()
+    val imageList: LiveData<List<LesionImageDTO>> = _imageList
+    val currentImagePath = MutableLiveData<String?>()
+
+    fun confirmImagePath(){
+        val currentImagePath = currentImagePath.value
+        currentImagePath?.let {
+            attachImage(it)
+        }
+    }
+
+    fun setInitialImagePathList(list: List<LesionImageDTO>){
+        _imageList.value = list
     }
 }

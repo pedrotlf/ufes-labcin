@@ -19,6 +19,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import br.com.ufes.pedrotlf.pad.BaseFragment
 import br.com.ufes.pedrotlf.pad.databinding.FragmentDermatologyNewPatientLesionPhotosBinding
+import br.com.ufes.pedrotlf.pad.createImageFile
 import com.bumptech.glide.Glide
 import java.io.File
 import java.io.IOException
@@ -46,7 +47,7 @@ class NewPatientLesionPhotosFragment : BaseFragment() {
 
         binding.apply {
             fragmentDermatologyNewPatientLesionPhotosCamera.setOnClickListener {
-                openCamera()
+                it.openCamera()
             }
 
             fragmentDermatologyNewPatientLesionPhotosFooterConfirmButton.setOnClickListener {
@@ -87,14 +88,16 @@ class NewPatientLesionPhotosFragment : BaseFragment() {
         }
     }
 
-    private fun openCamera(){
+    private fun View.openCamera(){
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             activity?.packageManager?.let { packageManager ->
                 // Ensure that there's a camera activity to handle the intent
                 takePictureIntent.resolveActivity(packageManager)?.also {
                     // Create the File where the photo should go
                     val photoFile: File? = try {
-                        createImageFile()
+                        createImageFile{
+                            newPatientViewModel.currentImagePath.value = it
+                        }
                     } catch (ex: IOException) {
                         // Error occurred while creating the File
                         Toast.makeText(
@@ -135,18 +138,5 @@ class NewPatientLesionPhotosFragment : BaseFragment() {
             }
         }
 
-    @Throws(IOException::class)
-    private fun createImageFile(): File? {
-        // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale("pt-BR")).format(Date())
-        val storageDir: File = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: return null
-        return File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
-            ".jpg", /* suffix */
-            storageDir /* directory */
-        ).apply {
-            // Save a file: path for use with ACTION_VIEW intents
-            newPatientViewModel.currentImagePath.value = absolutePath
-        }
-    }
+
 }
