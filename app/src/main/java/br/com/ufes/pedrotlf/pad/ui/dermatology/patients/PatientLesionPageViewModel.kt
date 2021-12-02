@@ -79,6 +79,14 @@ class PatientLesionPageViewModel @Inject constructor(
         }
     }
 
+    fun deleteImage(image: LesionImageDTO) = viewModelScope.launch {
+        if(patientsDAO.delete(image) > 0){
+            val currentList = _imageList.value?.toMutableList() ?: mutableListOf()
+            currentList.remove(image)
+            _imageList.value = currentList
+        }
+    }
+
     private val _imageList = MutableLiveData<List<LesionImageDTO>>()
     val imageList: LiveData<List<LesionImageDTO>> = _imageList
     val currentImagePath = MutableLiveData<String?>()

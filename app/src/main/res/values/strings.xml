@@ -15,6 +15,8 @@
 
     <string name="dialog_delete_patient_confirmation">Deseja excluir o paciente com o número do SUS: %s</string>
 
+    <string name="dialog_delete_image_confirmation">Deseja excluir essa imagem?</string>
+
     <string name="dermatology_home_patient_add_button">Novo paciente</string>
     <string name="dermatology_home_patient_list_button">Lista de pacientes</string>
     <string name="dermatology_home_patient_send_button">Enviar pacientes cadastrados</string>

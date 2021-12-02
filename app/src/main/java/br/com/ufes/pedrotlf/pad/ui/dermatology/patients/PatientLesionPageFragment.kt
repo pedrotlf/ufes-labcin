@@ -1,6 +1,7 @@
 package br.com.ufes.pedrotlf.pad.ui.dermatology.patients
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
 import androidx.core.view.children
@@ -21,6 +23,8 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import br.com.ufes.pedrotlf.pad.*
 import br.com.ufes.pedrotlf.pad.data.dto.LesionDTO
+import br.com.ufes.pedrotlf.pad.data.dto.LesionImageDTO
+import br.com.ufes.pedrotlf.pad.data.dto.PatientDTO
 import br.com.ufes.pedrotlf.pad.databinding.FragmentDermatologyPatientLesionPageBinding
 import com.bumptech.glide.Glide
 import java.io.File
@@ -147,6 +151,12 @@ class PatientLesionPageFragment(private val patientId: Int, private val lesion: 
             }
     }
 
+    private fun FragmentDermatologyPatientLesionPageBinding.setPictures() {
+        lesion?.images?.let { imagesDto ->
+            viewModel.setInitialImagePathList(imagesDto)
+        }
+    }
+
     private fun FragmentDermatologyPatientLesionPageBinding.observePicturesChanges() {
         viewModel.imageList.observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
@@ -160,6 +170,7 @@ class PatientLesionPageFragment(private val patientId: Int, private val lesion: 
                                 ViewGroup.LayoutParams.WRAP_CONTENT
                             )
                         imageView.id = View.generateViewId()
+                        imageView.setOnClickListener { ctx.showDeleteImageDialog(img) }
                         Glide.with(ctx).load(img.image).override(500).into(imageView)
                         fragmentDermatologyPatientDetailsLesionPhotosList.addView(imageView)
                         fragmentDermatologyPatientDetailsLesionPhotosListFlow.addView(imageView)
@@ -171,10 +182,18 @@ class PatientLesionPageFragment(private val patientId: Int, private val lesion: 
         }
     }
 
-    private fun FragmentDermatologyPatientLesionPageBinding.setPictures() {
-        lesion?.images?.let { imagesDto ->
-            viewModel.setInitialImagePathList(imagesDto)
-        }
+    private fun Context.showDeleteImageDialog(image: LesionImageDTO){
+        AlertDialog.Builder(this)
+            .setMessage(getString(R.string.dialog_delete_image_confirmation))
+            .setPositiveButton(R.string.word_confirm) { dialog, _ ->
+                viewModel.deleteImage(image)
+                dialog.dismiss()
+            }.setNegativeButton(R.string.word_cancel){ dialog, _ ->
+                dialog.cancel()
+            }.setOnCancelListener {
+                //Do nothing
+            }.create()
+            .show()
     }
 
     private fun View.openCamera(){
