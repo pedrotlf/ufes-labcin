@@ -56,6 +56,8 @@
     <string name="dermatology_patient_details_update_lesion_info">Atualizar dados da lesão</string>
     <string name="dermatology_patient_details_attach_lesion">Vincular lesão ao paciente</string>
 
+    <string name="dermatology_patient_details_lesion_images">Imagens</string>
+
 
     <string name="surgery_home_body_button">Adicionar lesão</string>
 

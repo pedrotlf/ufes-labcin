@@ -9,10 +9,7 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -159,21 +156,23 @@ class PatientLesionPageFragment(private val patientId: Int, private val lesion: 
 
     private fun FragmentDermatologyPatientLesionPageBinding.observePicturesChanges() {
         viewModel.imageList.observe(viewLifecycleOwner) {
+            fragmentDermatologyPatientDetailsLesionPhotosList.removeAllViews()
             if (!it.isNullOrEmpty()) {
                 fragmentDermatologyPatientDetailsLesionPhotosList.isVisible = true
-                it.forEach { img ->
+                it.forEachIndexed { i, img ->
                     context?.let { ctx ->
                         val imageView = ImageView(ctx)
-                        imageView.layoutParams =
-                            ConstraintLayout.LayoutParams(
-                                ViewGroup.LayoutParams.WRAP_CONTENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                            )
+                        val params = LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                        )
+                        if(i > 0)
+                            params.setMargins(0,20,0,0)
+                        imageView.layoutParams = params
                         imageView.id = View.generateViewId()
                         imageView.setOnClickListener { ctx.showDeleteImageDialog(img) }
-                        Glide.with(ctx).load(img.image).override(500).into(imageView)
+                        Glide.with(ctx).load(img.image).override(700).into(imageView)
                         fragmentDermatologyPatientDetailsLesionPhotosList.addView(imageView)
-                        fragmentDermatologyPatientDetailsLesionPhotosListFlow.addView(imageView)
                     }
                 }
             } else {
