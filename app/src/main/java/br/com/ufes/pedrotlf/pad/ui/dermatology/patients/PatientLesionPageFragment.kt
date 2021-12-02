@@ -130,7 +130,7 @@ class PatientLesionPageFragment(
             fragmentDermatologyPatientWoundRadioRelief.setBooleanRadioGroupListener(lesion?.lessionData?.woundHasRelief){woundHasRelief = it}
 
             fragmentDermatologyPatientWoundDeleteButton.setOnClickListener {
-                viewModel.deleteLesion()
+                it.context.showDeleteLesionDialog()
             }
         }
     }
@@ -198,6 +198,20 @@ class PatientLesionPageFragment(
             .setMessage(getString(R.string.dialog_delete_image_confirmation))
             .setPositiveButton(R.string.word_confirm) { dialog, _ ->
                 viewModel.deleteImage(image)
+                dialog.dismiss()
+            }.setNegativeButton(R.string.word_cancel){ dialog, _ ->
+                dialog.cancel()
+            }.setOnCancelListener {
+                //Do nothing
+            }.create()
+            .show()
+    }
+
+    private fun Context.showDeleteLesionDialog(){
+        AlertDialog.Builder(this)
+            .setMessage(getString(R.string.dialog_delete_lesion_confirmation))
+            .setPositiveButton(R.string.word_confirm) { dialog, _ ->
+                viewModel.deleteLesion()
                 dialog.dismiss()
             }.setNegativeButton(R.string.word_cancel){ dialog, _ ->
                 dialog.cancel()
