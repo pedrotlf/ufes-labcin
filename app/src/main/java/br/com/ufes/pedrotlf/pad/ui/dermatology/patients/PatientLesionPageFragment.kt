@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.FileProvider
 import androidx.core.view.children
 import androidx.core.view.isVisible
@@ -21,13 +20,17 @@ import androidx.fragment.app.viewModels
 import br.com.ufes.pedrotlf.pad.*
 import br.com.ufes.pedrotlf.pad.data.dto.LesionDTO
 import br.com.ufes.pedrotlf.pad.data.dto.LesionImageDTO
-import br.com.ufes.pedrotlf.pad.data.dto.PatientDTO
 import br.com.ufes.pedrotlf.pad.databinding.FragmentDermatologyPatientLesionPageBinding
 import com.bumptech.glide.Glide
 import java.io.File
 import java.io.IOException
 
-class PatientLesionPageFragment(private val patientId: Int, private val lesion: LesionDTO?): BaseFragment() {
+class PatientLesionPageFragment(
+    private val patientId: Int,
+    private val lesion: LesionDTO?,
+    private val selfDestroy: () -> Unit,
+    private val onLesionAttached: (LesionDTO) -> Unit
+): BaseFragment() {
 
     private var _binding: FragmentDermatologyPatientLesionPageBinding? = null
     private val binding get() = _binding!!
@@ -66,6 +69,11 @@ class PatientLesionPageFragment(private val patientId: Int, private val lesion: 
         viewModel.lesionCreated.observe(viewLifecycleOwner) {
             viewModel.currentLesion.value = it
             Toast.makeText(root.context, "Lesão vinculada ao paciente!", Toast.LENGTH_SHORT).show()
+            onLesionAttached.invoke(it)
+        }
+        viewModel.lesionRemoved.observe(viewLifecycleOwner) { wasRemoved ->
+            if(wasRemoved)
+                selfDestroy.invoke()
         }
 
         viewModel.currentLesion.observe(viewLifecycleOwner) { lesion ->
@@ -120,6 +128,10 @@ class PatientLesionPageFragment(private val patientId: Int, private val lesion: 
             fragmentDermatologyPatientWoundRadioHurt.setBooleanRadioGroupListener(lesion?.lessionData?.woundHurt){woundHurt = it}
             fragmentDermatologyPatientWoundRadioPatternChanged.setBooleanRadioGroupListener(lesion?.lessionData?.woundPatternChanged){woundPatternChanged = it}
             fragmentDermatologyPatientWoundRadioRelief.setBooleanRadioGroupListener(lesion?.lessionData?.woundHasRelief){woundHasRelief = it}
+
+            fragmentDermatologyPatientWoundDeleteButton.setOnClickListener {
+                viewModel.deleteLesion()
+            }
         }
     }
 

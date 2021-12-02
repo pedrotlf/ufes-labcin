@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import br.com.ufes.pedrotlf.pad.BaseFragment
+import br.com.ufes.pedrotlf.pad.data.dto.LesionDTO
 import br.com.ufes.pedrotlf.pad.databinding.FragmentDermatologyPatientDetailsBinding
 import br.com.ufes.pedrotlf.pad.getCitiesList
 import br.com.ufes.pedrotlf.pad.setAutoCompleteOptions
@@ -20,11 +21,7 @@ class PatientDetailsFragment: BaseFragment() {
     private var _binding: FragmentDermatologyPatientDetailsBinding? = null
     private val binding get() = _binding!!
     private val patientViewModel: PatientDetailsViewModel by viewModels()
-    private val adapter by lazy {
-        patientViewModel.patient?.let{ patient ->
-            PatientLesionsAdapter(this, patient.patientData.id, patient.lesions)
-        }
-    }
+    private var adapter: PatientLesionsAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentDermatologyPatientDetailsBinding.inflate(inflater, container, false)
@@ -40,8 +37,10 @@ class PatientDetailsFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
+            patientViewModel.patient?.let { patient ->
+                setAdapter(patient.patientData.id, patient.lesions)
+            }
             setPatientInfos()
-            setLesionList()
 
             fragmentDermatologyPatientDetailsUpdate.setOnClickListener {
                 patientViewModel.updatePatient()
@@ -63,16 +62,26 @@ class PatientDetailsFragment: BaseFragment() {
         }
     }
 
-    private fun FragmentDermatologyPatientDetailsBinding.setLesionList() {
-        patientViewModel.patient?.lesions?.let {
-            fragmentDermatologyPatientDetailsLesionsList.adapter = adapter
-            TabLayoutMediator(
-                fragmentDermatologyPatientDetailsLesionsTab,
-                fragmentDermatologyPatientDetailsLesionsList
-            ) { tab, position ->
-                tab.text = (position + 1).toString()
-            }.attach()
-        } ?: kotlin.run { fragmentDermatologyPatientDetailsLesionsList.isVisible = false }
+    private fun FragmentDermatologyPatientDetailsBinding.setAdapter(patientId: Int, list: List<LesionDTO?>) {
+        val finalList = if(list.isNotEmpty()) list else listOf(null)
+        adapter = PatientLesionsAdapter(
+                this@PatientDetailsFragment,
+                patientId,
+                finalList
+        ) { i, lesionRemoved ->
+            val newList: MutableList<LesionDTO?> =
+                adapter?.list?.toMutableList() ?: mutableListOf()
+            newList.removeAt(i)
+            setAdapter(patientId, newList)
+        }
+        fragmentDermatologyPatientDetailsLesionsList.adapter = adapter
+
+        TabLayoutMediator(
+            fragmentDermatologyPatientDetailsLesionsTab,
+            fragmentDermatologyPatientDetailsLesionsList
+        ) { tab, position ->
+            tab.text = (position + 1).toString()
+        }.attach()
     }
 
     private fun FragmentDermatologyPatientDetailsBinding.setPatientInfos(){

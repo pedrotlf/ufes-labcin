@@ -30,9 +30,9 @@ abstract class PatientsDAO {
     abstract suspend fun update(lesion: LesionImageDTO): Int
 
     @Delete
-    abstract suspend fun delete(patient: PatientDataDTO)
+    abstract suspend fun delete(patient: PatientDataDTO): Int
     @Delete
-    abstract suspend fun delete(lesion: LesionDataDTO)
+    abstract suspend fun delete(lesion: LesionDataDTO): Int
     @Delete
     abstract suspend fun unsafeDelete(lesion: LesionImageDTO): Int
 
@@ -45,11 +45,11 @@ abstract class PatientsDAO {
     }
 
     @Transaction
-    open suspend fun delete(lesion: LesionDTO) {
+    open suspend fun delete(lesion: LesionDTO): Int {
         lesion.images.forEach { lesionImageDTO ->
             delete(lesionImageDTO)
         }
-        delete(lesion.lessionData)
+        return delete(lesion.lessionData)
     }
 
     @Transaction

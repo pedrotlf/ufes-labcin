@@ -68,6 +68,16 @@ class PatientLesionPageViewModel @Inject constructor(
             _lesionCreated.value = LesionDTO(newLesion.copy(id = lesionId.toInt()), emptyList())
     }
 
+    private val _lesionRemoved = MutableLiveData<Boolean>()
+    val lesionRemoved: LiveData<Boolean> = _lesionRemoved
+    fun deleteLesion() = viewModelScope.launch{
+        currentLesion.value?.let{
+            _lesionRemoved.value = patientsDAO.delete(it) > 0
+        } ?: run {
+            _lesionRemoved.value = true
+        }
+    }
+
     private fun attachImage(path: String) = viewModelScope.launch{
         currentLesion.value?.let {
             val newImage = LesionImageDTO(path, it.lessionData.id)
