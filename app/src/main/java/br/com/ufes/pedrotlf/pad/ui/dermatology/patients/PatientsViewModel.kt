@@ -36,16 +36,18 @@ class PatientsViewModel @Inject constructor(
     private fun sendAllPatients(patientsList: List<PatientDTO>) = viewModelScope.launch{
         _sendPatientRequest.value = Resource.Loading
         patientsList.forEach { patient ->
-            runCatching {
-                sadeRepository.sendDermatologyPatientLesion(
-                    patient.patientData,
-                    patient.lesions.first()
-                )
-            }.onSuccess {
-                patientsDAO.delete(patient)
-            }.onFailure {
-                _sendPatientRequest.value = Resource.Failure(it)
-                return@launch
+            patient.lesions.forEach { lesion ->
+                runCatching {
+                    sadeRepository.sendDermatologyPatientLesion(
+                        patient.patientData,
+                        lesion
+                    )
+                }.onSuccess {
+                    patientsDAO.delete(patient)
+                }.onFailure {
+                    _sendPatientRequest.value = Resource.Failure(it)
+                    return@launch
+                }
             }
         }
         _sendPatientRequest.value = Resource.Success(null)
