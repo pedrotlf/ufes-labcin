@@ -39,12 +39,17 @@ abstract class PatientsDAO {
     @Transaction
     open suspend fun delete(patient: PatientDTO) {
         patient.lesions.forEach {
-            it.images.forEach { lesionImageDTO ->
-                delete(lesionImageDTO)
-            }
-            delete(it.lessionData)
+            delete(it)
         }
         delete(patient.patientData)
+    }
+
+    @Transaction
+    open suspend fun delete(lesion: LesionDTO) {
+        lesion.images.forEach { lesionImageDTO ->
+            delete(lesionImageDTO)
+        }
+        delete(lesion.lessionData)
     }
 
     @Transaction
