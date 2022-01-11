@@ -18,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.ufes.pedrotlf.pad.BaseFragment
+import br.com.ufes.pedrotlf.pad.createImageFile
 import br.com.ufes.pedrotlf.pad.data.Resource
 import br.com.ufes.pedrotlf.pad.databinding.FragmentSurgeryPatientPhotosBinding
 import br.com.ufes.pedrotlf.pad.ui.dermatology.newpatient.NewPatientLesionPhotosFragmentDirections
@@ -49,7 +50,11 @@ class SurgeryPatientPhotosFragment: BaseFragment() {
 
         binding.apply {
             fragmentSurgeryPatientPhotosCamera.setOnClickListener {
-                openCamera()
+                it.openCamera()
+            }
+
+            fragmentSurgeryPatientPhotosAlbum.setOnClickListener {
+                it.openFilePicker()
             }
 
             fragmentSurgeryPatientPhotosFooterConfirmButton.setOnClickListener {
@@ -95,6 +100,8 @@ class SurgeryPatientPhotosFragment: BaseFragment() {
         }
     }
 
+    //TODO Modularizar, talvez implementando uma função genérica no Utils.kt
+// (verificar outros lugares em que o código se repete)
     private fun FragmentSurgeryPatientPhotosBinding.addImagePreview(imgPath: String) {
         context?.let { ctx ->
             val imageView = ImageView(ctx)
@@ -110,14 +117,16 @@ class SurgeryPatientPhotosFragment: BaseFragment() {
         }
     }
 
-    private fun openCamera(){
+    //TODO Modularizar, talvez implementando uma função genérica no Utils.kt
+    // (verificar outros lugares em que o código se repete)
+    private fun View.openCamera(){
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             activity?.packageManager?.let { packageManager ->
                 // Ensure that there's a camera activity to handle the intent
                 takePictureIntent.resolveActivity(packageManager)?.also {
                     // Create the File where the photo should go
                     val photoFile: File? = try {
-                        createImageFile()
+                        context.createImageFile()
                     } catch (ex: IOException) {
                         // Error occurred while creating the File
                         Toast.makeText(
@@ -125,6 +134,8 @@ class SurgeryPatientPhotosFragment: BaseFragment() {
                             "Erro ao tentar gerar um arquivo para a foto",
                             Toast.LENGTH_SHORT).show()
                         null
+                    }?.also {
+                        patientPhotosViewModel.currentImagePath.value = it.absolutePath
                     }
 
                     // Continue only if the File was successfully created
@@ -158,18 +169,49 @@ class SurgeryPatientPhotosFragment: BaseFragment() {
             }
         }
 
-    @Throws(IOException::class)
-    private fun createImageFile(): File? {
-        // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale("pt-BR")).format(Date())
-        val storageDir: File = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: return null
-        return File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
-            ".jpg", /* suffix */
-            storageDir /* directory */
-        ).apply {
-            // Save a file: path for use with ACTION_VIEW intents
-            patientPhotosViewModel.currentImagePath.value = absolutePath
+    //TODO Modularizar, talvez implementando uma função genérica no Utils.kt
+    // (verificar outros lugares em que o código se repete)
+    private fun View.openFilePicker() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "image/jpeg"
+        }
+
+        try{
+            context.createImageFile()
+        } catch (ex: IOException) {
+            // Error occurred while creating the File
+            Toast.makeText(
+                context,
+                "Erro ao tentar gerar um arquivo para a foto",
+                Toast.LENGTH_SHORT).show()
+            null
+        }?.also { photoFile ->
+            patientPhotosViewModel.currentImagePath.value = photoFile.absolutePath
+            filePickerActivityLauncher.launch(intent)
         }
     }
+
+    private val filePickerActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            patientPhotosViewModel.currentImagePath.value?.let { photoFilePath ->
+                var shouldDeleteFile = true
+                val photoFile = File(photoFilePath)
+                if(result.resultCode == Activity.RESULT_OK){
+                    result.data?.data?.also { pickedFilePath ->
+                        photoFile.outputStream().use {
+                            context?.contentResolver?.openInputStream(pickedFilePath)?.copyTo(it)
+                            patientPhotosViewModel.confirmImagePath()
+                            shouldDeleteFile = false
+                        }
+                    }
+                }
+                if(shouldDeleteFile){
+                    if(photoFile.delete())
+                        Toast.makeText(context, "Arquivo de imagem cancelado", Toast.LENGTH_SHORT).show()
+                    else
+                        Toast.makeText(context, "Não foi possível excluir o arquivo", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
 }

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -18,13 +17,12 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import br.com.ufes.pedrotlf.pad.BaseFragment
-import br.com.ufes.pedrotlf.pad.databinding.FragmentDermatologyNewPatientLesionPhotosBinding
 import br.com.ufes.pedrotlf.pad.createImageFile
+import br.com.ufes.pedrotlf.pad.databinding.FragmentDermatologyNewPatientLesionPhotosBinding
 import com.bumptech.glide.Glide
 import java.io.File
 import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
+
 
 class NewPatientLesionPhotosFragment : BaseFragment() {
 
@@ -48,6 +46,10 @@ class NewPatientLesionPhotosFragment : BaseFragment() {
         binding.apply {
             fragmentDermatologyNewPatientLesionPhotosCamera.setOnClickListener {
                 it.openCamera()
+            }
+
+            fragmentDermatologyNewPatientLesionPhotosAlbum.setOnClickListener {
+                it.openFilePicker()
             }
 
             fragmentDermatologyNewPatientLesionPhotosFooterConfirmButton.setOnClickListener {
@@ -95,9 +97,7 @@ class NewPatientLesionPhotosFragment : BaseFragment() {
                 takePictureIntent.resolveActivity(packageManager)?.also {
                     // Create the File where the photo should go
                     val photoFile: File? = try {
-                        createImageFile{
-                            newPatientViewModel.currentImagePath.value = it
-                        }
+                        context.createImageFile()
                     } catch (ex: IOException) {
                         // Error occurred while creating the File
                         Toast.makeText(
@@ -105,6 +105,8 @@ class NewPatientLesionPhotosFragment : BaseFragment() {
                             "Erro ao tentar gerar um arquivo para a foto",
                             Toast.LENGTH_SHORT).show()
                         null
+                    }?.also {
+                        newPatientViewModel.currentImagePath.value = it.absolutePath
                     }
 
                     // Continue only if the File was successfully created
@@ -138,5 +140,47 @@ class NewPatientLesionPhotosFragment : BaseFragment() {
             }
         }
 
+    private fun View.openFilePicker() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "image/jpeg"
+        }
 
+        try{
+            context.createImageFile()
+        } catch (ex: IOException) {
+            // Error occurred while creating the File
+            Toast.makeText(
+                context,
+                "Erro ao tentar gerar um arquivo para a foto",
+                Toast.LENGTH_SHORT).show()
+            null
+        }?.also { photoFile ->
+            newPatientViewModel.currentImagePath.value = photoFile.absolutePath
+            filePickerActivityLauncher.launch(intent)
+        }
+    }
+
+    private val filePickerActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            newPatientViewModel.currentImagePath.value?.let { photoFilePath ->
+                var shouldDeleteFile = true
+                val photoFile = File(photoFilePath)
+                if(result.resultCode == Activity.RESULT_OK){
+                    result.data?.data?.also { pickedFilePath ->
+                        photoFile.outputStream().use {
+                            context?.contentResolver?.openInputStream(pickedFilePath)?.copyTo(it)
+                            newPatientViewModel.confirmImagePath()
+                            shouldDeleteFile = false
+                        }
+                    }
+                }
+                if(shouldDeleteFile){
+                    if(photoFile.delete())
+                        Toast.makeText(context, "Arquivo de imagem cancelado", Toast.LENGTH_SHORT).show()
+                    else
+                        Toast.makeText(context, "Não foi possível excluir o arquivo", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
 }

@@ -2,8 +2,6 @@ package br.com.ufes.pedrotlf.pad
 
 import android.content.Context
 import android.os.Environment
-import android.view.MotionEvent
-import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -70,16 +68,14 @@ fun Context.getProceduresList() = deserializeFromJson<List<String>>(loadJSONFrom
 fun Context.getRegionList() = deserializeFromJson<List<String>>(loadJSONFromAssets("listaAutoCompRegiao.json"))
 
 @Throws(IOException::class)
-fun View.createImageFile(pathCreatedCallback: (absolutePath: String) -> Unit): File? {
+fun Context.createImageFile(): File? {
     // Create an image file name
     val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale("pt-BR")).format(Date())
-    val storageDir: File = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: return null
+    val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES) ?: return null
     return File.createTempFile(
         "JPEG_${timeStamp}_", /* prefix */
         ".jpg", /* suffix */
         storageDir /* directory */
-    ).apply {
-        // Save a file: path for use with ACTION_VIEW intents
-        pathCreatedCallback(absolutePath)
-    }
+    )
 }
+

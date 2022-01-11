@@ -85,6 +85,9 @@ class PatientLesionPageFragment(
                 fragmentDermatologyPatientDetailsLesionPhotosCamera.setOnClickListener {
                     it.openCamera()
                 }
+                fragmentDermatologyPatientDetailsLesionPhotosAlbum.setOnClickListener {
+                    it.openFilePicker()
+                }
             } else {
                 fragmentDermatologyPatientWoundFooterNextButton.apply {
                     text = getString(R.string.dermatology_patient_details_attach_lesion)
@@ -228,9 +231,7 @@ class PatientLesionPageFragment(
                 takePictureIntent.resolveActivity(packageManager)?.also {
                     // Create the File where the photo should go
                     val photoFile: File? = try {
-                        createImageFile{
-                            viewModel.currentImagePath.value = it
-                        }
+                        context.createImageFile()
                     } catch (ex: IOException) {
                         // Error occurred while creating the File
                         Toast.makeText(
@@ -238,6 +239,8 @@ class PatientLesionPageFragment(
                             "Erro ao tentar gerar um arquivo para a foto",
                             Toast.LENGTH_SHORT).show()
                         null
+                    }?.also {
+                        viewModel.currentImagePath.value = it.absolutePath
                     }
 
                     // Continue only if the File was successfully created
@@ -267,6 +270,50 @@ class PatientLesionPageFragment(
                         else
                             Toast.makeText(ctx, "Não foi possível excluir o arquivo", Toast.LENGTH_SHORT).show()
                     }
+                }
+            }
+        }
+
+    private fun View.openFilePicker() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "image/jpeg"
+        }
+
+        try{
+            context.createImageFile()
+        } catch (ex: IOException) {
+            // Error occurred while creating the File
+            Toast.makeText(
+                context,
+                "Erro ao tentar gerar um arquivo para a foto",
+                Toast.LENGTH_SHORT).show()
+            null
+        }?.also { photoFile ->
+            viewModel.currentImagePath.value = photoFile.absolutePath
+            filePickerActivityLauncher.launch(intent)
+        }
+    }
+
+    private val filePickerActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            viewModel.currentImagePath.value?.let { photoFilePath ->
+                var shouldDeleteFile = true
+                val photoFile = File(photoFilePath)
+                if(result.resultCode == Activity.RESULT_OK){
+                    result.data?.data?.also { pickedFilePath ->
+                        photoFile.outputStream().use {
+                            context?.contentResolver?.openInputStream(pickedFilePath)?.copyTo(it)
+                            viewModel.confirmImagePath()
+                            shouldDeleteFile = false
+                        }
+                    }
+                }
+                if(shouldDeleteFile){
+                    if(photoFile.delete())
+                        Toast.makeText(context, "Arquivo de imagem cancelado", Toast.LENGTH_SHORT).show()
+                    else
+                        Toast.makeText(context, "Não foi possível excluir o arquivo", Toast.LENGTH_SHORT).show()
                 }
             }
         }
